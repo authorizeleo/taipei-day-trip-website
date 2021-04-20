@@ -21,6 +21,7 @@ def booking():
 def thankyou():
 	return render_template("thankyou.html")
 
+<<<<<<< HEAD
 @app.route('/api/attractions')
 def taipei_api():
 
@@ -44,3 +45,6 @@ def taipei_api():
 
 if __name__ == '__main__':
 	app.run(port=3000, debug=True)
+=======
+app.run(port=3000)
+>>>>>>> 82e1ba0e47ff67b58611ad289baa89f34629bc9c

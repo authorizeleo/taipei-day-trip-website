@@ -5,6 +5,10 @@ import os
 from dotenv import load_dotenv
 load_dotenv()
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 82e1ba0e47ff67b58611ad289baa89f34629bc9c
 DB_NAME = 'TaipeiTravel'
 try:
   cnx = mysql.connector.connect(
@@ -25,9 +29,12 @@ else:
 
 cursor = cnx.cursor()
 
+<<<<<<< HEAD
 
 
 
+=======
+>>>>>>> 82e1ba0e47ff67b58611ad289baa89f34629bc9c
 def create_database(cursor):
     try:
         cursor.execute(
@@ -61,7 +68,10 @@ TABLES['sightseeing'] = (
     "  `latitude` float NOT NULL,"
     "  `longitude` float NOT NULL,"
     "  `images` int NOT NULL,"
+<<<<<<< HEAD
     "  `page` int NOT NULL,"
+=======
+>>>>>>> 82e1ba0e47ff67b58611ad289baa89f34629bc9c
     "  PRIMARY KEY (`id`), UNIQUE KEY `images` (`images`)"
     ") ENGINE=InnoDB")
 
@@ -77,6 +87,7 @@ TABLES['image'] = (
     ") ENGINE=InnoDB")
 
 
+<<<<<<< HEAD
 def json_mysql():
     add_data = ("INSERT INTO sightseeing "
                "(name, category, description, address, transport, mrt, latitude, longitude, images, page) "
@@ -112,16 +123,24 @@ def json_mysql():
 
 
 
+=======
+>>>>>>> 82e1ba0e47ff67b58611ad289baa89f34629bc9c
 for table_name in TABLES:
     table_description = TABLES[table_name]
     try:
         print("Creating table {}: ".format(table_name), end='')
         cursor.execute(table_description)
+<<<<<<< HEAD
         json_mysql()
     except mysql.connector.Error as err:
         if err.errno == errorcode.ER_TABLE_EXISTS_ERROR:
             print("already exists.")
             
+=======
+    except mysql.connector.Error as err:
+        if err.errno == errorcode.ER_TABLE_EXISTS_ERROR:
+            print("already exists.")
+>>>>>>> 82e1ba0e47ff67b58611ad289baa89f34629bc9c
         else:
             print(err.msg)
     else:
@@ -129,6 +148,7 @@ for table_name in TABLES:
 
 
 
+<<<<<<< HEAD
 def search_page(page_id):
     if int(page_id) > 26:
         error = {
@@ -190,3 +210,42 @@ print('closing')
 
 # cursor.close()
 # cnx.close()
+=======
+
+add_data = ("INSERT INTO sightseeing "
+               "(name, category, description, address, transport, mrt, latitude, longitude, images) "
+               "VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)")
+
+
+add_image = ("INSERT INTO image "
+               "(image_no, src) "
+               "VALUES (%s, %s)")
+
+with open("taipei-attractions.json", encoding="utf-8") as json_file:
+    json_data = json.load(json_file)
+    json_list = json_data['result']['results']
+    for f in json_list:
+        name = f['stitle']
+        category = f['CAT2']
+        description = f['xbody']
+        address = f['address']
+        transport = f['info']
+        mrt = f["MRT"]
+        latitude = f["latitude"]
+        longitude = f["longitude"]
+        images = f['_id']
+        imagefile = f['file'].split('http://')
+        taipei_data = (name, category, description, address, transport, mrt, latitude, longitude, images)
+        cursor.execute(add_data, taipei_data)
+        for img in imagefile[1:]:
+            if '.png' and '.jpg' in img.lower():
+                taipei_image = (images, img)
+                cursor.execute(add_image, taipei_image)
+    
+
+cnx.commit()
+print('closing')
+
+cursor.close()
+cnx.close()
+>>>>>>> 82e1ba0e47ff67b58611ad289baa89f34629bc9c
