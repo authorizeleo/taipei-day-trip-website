@@ -1,7 +1,7 @@
 from flask import *
-# import sys,os
+import sys,os
 from data.data import search_page, keyword_search, search_attraction_Id
-# sys.path.append(os.path.dirname(__file__) + os.sep + '../')
+sys.path.append(os.path.dirname(__file__) + os.sep + '../')
 app=Flask(__name__)
 app.config["JSON_AS_ASCII"]=False
 app.config["TEMPLATES_AUTO_RELOAD"]=True
@@ -48,5 +48,5 @@ def show_attraction(attractionId):
 
 
 if __name__ == '__main__':
-	app.run(port=3000,debug=True)
-	# app.run(host="0.0.0.0",port=3000)
+	# app.run(port=3000,debug=True)
+	app.run(host="0.0.0.0",port=3000)
