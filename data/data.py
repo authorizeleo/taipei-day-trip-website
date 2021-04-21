@@ -129,9 +129,11 @@ with open(r"data/taipei-attractions.json", encoding="utf-8") as json_file:
         imagefile = f['file'].split('http:')
         for img in imagefile[1:]:
             if '.png' or '.jpg' in img.lower():
-                taipei_image = (sightseeing_id, "http:" + img)
-                cursor.execute(add_image, taipei_image)
-                cnx.commit()
+                if '.mp3' not in img.lower():   
+                    if '.flv' not  in img.lower():
+                        taipei_image = (sightseeing_id, "http:" + img)
+                        cursor.execute(add_image, taipei_image)
+                        cnx.commit()
 
     
 
@@ -184,9 +186,7 @@ def create_api_data(result):
     cursor.execute("SELECT src FROM  image  WHERE  image_no = {}".format(result[0]))
     img_src = cursor.fetchall()
     for img in img_src:
-        if '.mp' not in img[0].lower():   
-            if '.flv' not  in img[0].lower():
-                img_box.append(img[0])
+        img_box.append(img[0])
     
     if result[-1] > 25:
         page = None
