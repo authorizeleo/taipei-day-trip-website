@@ -105,7 +105,7 @@ add_image = ("INSERT IGNORE INTO image "
             "(image_no, src) "
             "VALUES (%s, %s)")
 
-with open(r"D:\taipei-day-trip-website\data\taipei-attractions.json", encoding="utf-8") as json_file:
+with open(r"data\taipei-attractions.json", encoding="utf-8") as json_file:
     json_data = json.load(json_file)
     json_list = json_data['result']['results']
     for f in json_list:
