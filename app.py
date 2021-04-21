@@ -29,12 +29,12 @@ def taipei_api():
 		"error":True,
 		"message":"伺服器內部錯誤"
 	}
-	if 'page' in request.args:
-		page_id = request.args['page']
-		return jsonify(search_page(page_id))
-	if 'keyword' in request.args:
+	page_id = request.args['page']
+	if 'page' and 'keyword' in request.args:
 		keyword = request.args['keyword']
-		return jsonify(keyword_search(keyword))
+		return jsonify(keyword_search(keyword,page_id))
+	elif 'page' in request.args:
+		return jsonify(search_page(page_id))
 	else:
 		return jsonify(sever_error)
 	

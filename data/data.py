@@ -1,4 +1,5 @@
 import json
+import math
 import mysql.connector
 from mysql.connector import errorcode
 import os
@@ -119,7 +120,7 @@ with open(r"data/taipei-attractions.json", encoding="utf-8") as json_file:
         latitude = f["latitude"]
         longitude = f["longitude"]
         images = f['_id']
-        page = int(images / 12) 
+        page = math.floor(images / 13) + 1 
         imagefile = f['file'].split('http://')
         taipei_data = (sightseeing_id, name, category, description, address, transport, mrt, latitude, longitude, images, page)
         cursor.execute(add_data, taipei_data)
@@ -138,24 +139,29 @@ with open(r"data/taipei-attractions.json", encoding="utf-8") as json_file:
 
 
 def search_page(page_id):
-    if int(page_id) > 26:
+    if int(page_id) > 26 or int(page_id) <= 0:
         error = {
             "error":True,
             "message":"沒有此頁數"
         }
         return error
     page_box = []
-    for i in range(0,12):
-        cursor.execute("SELECT * FROM sightseeing  WHERE page = {}".format(page_id))
-        result = cursor.fetchall()
-        page_box.append(create_api_data(result[i]))
-    return page_box
+    try:
+        for i in range(0,12):
+            cursor.execute("SELECT * FROM sightseeing  WHERE page = {}".format(page_id))
+            result = cursor.fetchall()
+            page_box.append(create_api_data(result[i]))
+    except:
+        print('error')
+    finally:
+        return page_box
         
 
-def keyword_search(keyword):
+def keyword_search(keyword, page_id):
     try:
-        cursor.execute("SELECT * FROM sightseeing  WHERE name ='{}'".format(keyword))
+        cursor.execute("SELECT * FROM sightseeing  WHERE name ='{}' and page ={}".format(keyword,page_id))
         result = cursor.fetchall()
+        print(result)
         return create_api_data(result[0])
     except:
         error = {
