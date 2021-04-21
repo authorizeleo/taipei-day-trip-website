@@ -105,7 +105,7 @@ add_image = ("INSERT IGNORE INTO image "
             "(image_no, src) "
             "VALUES (%s, %s)")
 
-with open(r"data\taipei-attractions.json", encoding="utf-8") as json_file:
+with open(r"data/taipei-attractions.json", encoding="utf-8") as json_file:
     json_data = json.load(json_file)
     json_list = json_data['result']['results']
     for f in json_list:
@@ -145,7 +145,7 @@ def search_page(page_id):
         }
         return error
     page_box = []
-    for i in range(0,11):
+    for i in range(0,12):
         cursor.execute("SELECT * FROM sightseeing  WHERE page = {}".format(page_id))
         result = cursor.fetchall()
         page_box.append(create_api_data(result[i]))
