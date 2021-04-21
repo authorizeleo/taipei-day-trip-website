@@ -39,9 +39,11 @@ def taipei_api():
 	page_id = int(request.args['page'])
 	if 'keyword' in request.args:
 		keyword = request.args['keyword']
-		if (len(keyword_search(keyword)) == 0):
+		search_result = keyword_search(keyword)
+		if (len(search_result) == 0):
 			return jsonify(filter_error)
-		for data in keyword_search(keyword):
+
+		for data in search_result:
 			data_box.append(data) 
 			count += 1
 			if(count / 12 == 1):
@@ -51,6 +53,11 @@ def taipei_api():
 
 		for i in range(0, len(filter_data)):
 			if page_id == i:
+				for x in range(0, len(filter_data[i])):
+					if page_id == len(filter_data)-1:
+						filter_data[i][x]['nextPage'] = None
+					else:
+						filter_data[i][x]['nextPage'] = page_id+1
 				return jsonify(filter_data[i])
 			elif page_id > (len(filter_data)-1):
 				return jsonify(filter_error)
@@ -75,5 +82,5 @@ def show_attraction(attractionId):
 
 
 if __name__ == '__main__':
-	# app.run(port=3000,debug=True)
-	app.run(host="0.0.0.0",port=3000)
+	app.run(port=3000,debug=True)
+	# app.run(host="0.0.0.0",port=3000)
