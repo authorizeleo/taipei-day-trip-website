@@ -29,10 +29,30 @@ def taipei_api():
 		"error":True,
 		"message":"伺服器內部錯誤"
 	}
-	page_id = request.args['page']
-	if 'page' and 'keyword' in request.args:
+	filter_error ={
+		"error":True,
+		"message":"查無此資料"
+	}
+	filter_data = []
+	data_box = []
+	count = 0
+	page_id = int(request.args['page'])
+	if 'keyword' in request.args:
 		keyword = request.args['keyword']
-		return jsonify(keyword_search(keyword,page_id))
+		if (len(keyword_search(keyword)) == 0):
+			return jsonify(filter_error)
+		for data in keyword_search(keyword):
+			data_box.append(data) 
+			count += 1
+			if(count / 12 == 1):
+				filter_data.append(data_box[-12:])
+		if(count % 12 != 0):
+			filter_data.append(data_box[-(len(data_box) % 12):])
+
+		for i in range(0, len(filter_data)):
+			if page_id == i:
+				return jsonify(filter_data[i])
+			
 	elif 'page' in request.args:
 		return jsonify(search_page(page_id))
 	else:

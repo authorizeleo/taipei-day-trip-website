@@ -123,12 +123,13 @@ with open(r"data/taipei-attractions.json", encoding="utf-8") as json_file:
             page = int(images / 12)
         else:
             page = int(images / 12) -1
-        imagefile = f['file'].split('http://')
         taipei_data = (sightseeing_id, name, category, description, address, transport, mrt, latitude, longitude, images, page)
         cursor.execute(add_data, taipei_data)
+        cnx.commit()
+        imagefile = f['file'].split('http:')
         for img in imagefile[1:]:
-            if '.png' and '.jpg' in img.lower():
-                    taipei_image = (images, "http://" + img)
+            if '.png' or '.jpg' in img.lower():
+                    taipei_image = (sightseeing_id, "http:" + img)
                     cursor.execute(add_image, taipei_image)
                     cnx.commit()
 
@@ -160,17 +161,14 @@ def search_page(page_id):
     
         
 
-def keyword_search(keyword, page_id):
-    try:
-        cursor.execute("SELECT * FROM sightseeing  WHERE name ='{}' and page ={}".format(keyword,page_id))
-        result = cursor.fetchall()
-        return create_api_data(result[0])
-    except:
-        error = {
-            "error":True,
-            "message":"關鍵字錯誤"
-        }
-        return error
+def keyword_search(keyword):
+    filter_box =[]
+    cursor.execute("SELECT * FROM sightseeing  WHERE name like'%{}%' ".format(keyword))
+    result = cursor.fetchall()
+    for r in result:
+        filter_box.append(create_api_data(r))
+    return filter_box 
+    
 
 def search_attraction_Id(attraction_Id):
     cursor.execute("SELECT * FROM sightseeing  WHERE id ={}".format(attraction_Id))
