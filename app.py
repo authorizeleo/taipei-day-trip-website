@@ -41,6 +41,12 @@ def taipei_api():
 	
 @app.route('/api/attraction/<int:attractionId>')
 def show_attraction(attractionId):
+	if attractionId < 1 or attractionId > 319:
+		id_error ={
+			"error":True,
+			"message":"id不在範圍內"
+		}
+		return jsonify(id_error)
 	return jsonify(search_attraction_Id(attractionId))
 
 
