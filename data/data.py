@@ -1,5 +1,4 @@
 import json
-import math
 import mysql.connector
 from mysql.connector import errorcode
 import os
@@ -120,7 +119,10 @@ with open(r"data/taipei-attractions.json", encoding="utf-8") as json_file:
         latitude = f["latitude"]
         longitude = f["longitude"]
         images = f['_id']
-        page = math.floor(images / 13) + 1 
+        if images % 12 != 0:
+            page = int(images / 12)
+        else:
+            page = int(images / 12) -1
         imagefile = f['file'].split('http://')
         taipei_data = (sightseeing_id, name, category, description, address, transport, mrt, latitude, longitude, images, page)
         cursor.execute(add_data, taipei_data)
@@ -139,7 +141,7 @@ with open(r"data/taipei-attractions.json", encoding="utf-8") as json_file:
 
 
 def search_page(page_id):
-    if int(page_id) > 26 or int(page_id) <= 0:
+    if int(page_id) > 26 or int(page_id) < 0:
         error = {
             "error":True,
             "message":"沒有此頁數"
@@ -150,18 +152,18 @@ def search_page(page_id):
         for i in range(0,12):
             cursor.execute("SELECT * FROM sightseeing  WHERE page = {}".format(page_id))
             result = cursor.fetchall()
+            # print(result[0])
             page_box.append(create_api_data(result[i]))
-    except:
-        print('error')
-    finally:
         return page_box
+    except:
+        return page_box
+    
         
 
 def keyword_search(keyword, page_id):
     try:
         cursor.execute("SELECT * FROM sightseeing  WHERE name ='{}' and page ={}".format(keyword,page_id))
         result = cursor.fetchall()
-        print(result)
         return create_api_data(result[0])
     except:
         error = {
@@ -171,7 +173,7 @@ def keyword_search(keyword, page_id):
         return error
 
 def search_attraction_Id(attraction_Id):
-    cursor.execute("SELECT * FROM sightseeing  WHERE images ={}".format(attraction_Id))
+    cursor.execute("SELECT * FROM sightseeing  WHERE id ={}".format(attraction_Id))
     result = cursor.fetchall()
     return create_api_data(result[0])
     
@@ -183,10 +185,13 @@ def create_api_data(result):
     img_src = cursor.fetchall()
     for img in img_src:
         img_box.append(img[0])
-
     
+    if result[-1] > 25:
+        page = None
+    else:
+        page = result[-1] + 1
     taipei_api_data = {
-                "nextPage": result[-1],
+                "nextPage": page,
                 "data": [
                     {
                     "id": result[0],
