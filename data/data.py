@@ -129,9 +129,9 @@ with open(r"data/taipei-attractions.json", encoding="utf-8") as json_file:
         imagefile = f['file'].split('http:')
         for img in imagefile[1:]:
             if '.png' or '.jpg' in img.lower():
-                    taipei_image = (sightseeing_id, "http:" + img)
-                    cursor.execute(add_image, taipei_image)
-                    cnx.commit()
+                taipei_image = (sightseeing_id, "http:" + img)
+                cursor.execute(add_image, taipei_image)
+                cnx.commit()
 
     
 
@@ -173,30 +173,9 @@ def keyword_search(keyword):
 def search_attraction_Id(attraction_Id):
     cursor.execute("SELECT * FROM sightseeing  WHERE id ={}".format(attraction_Id))
     result = cursor.fetchall()
-    cursor.execute("SELECT src FROM  image  WHERE  image_no = {}".format(result[0][0]))
-    img_src = cursor.fetchall()
-    
-    img_box = []
-    for img in img_src:
-        img_box.append(img[0])
-
-    taipei_api_data = {
-                "data": [
-                    {
-                    "id": result[0][0],
-                    "name": result[0][1],
-                    "category": result[0][2],
-                    "description": result[0][3],
-                    "address": result[0][4],
-                    "transport": result[0][5],
-                    "mrt": result[0][6],
-                    "latitude": result[0][7],
-                    "longitude": result[0][8],
-                    "images":img_box
-                    }
-                ]
-            }  
-    return taipei_api_data
+    data = create_api_data(result[0])
+    del data['nextPage'] 
+    return data
     
 
 def create_api_data(result):
@@ -205,7 +184,9 @@ def create_api_data(result):
     cursor.execute("SELECT src FROM  image  WHERE  image_no = {}".format(result[0]))
     img_src = cursor.fetchall()
     for img in img_src:
-        img_box.append(img[0])
+        if '.mp' not in img[0].lower():   
+            if '.flv' not  in img[0].lower():
+                img_box.append(img[0])
     
     if result[-1] > 25:
         page = None

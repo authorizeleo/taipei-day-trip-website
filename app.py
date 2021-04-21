@@ -48,8 +48,9 @@ def taipei_api():
 			count += 1
 			if(count / 12 == 1):
 				filter_data.append(data_box[-12:])
+				data_box.clear()
 		if(count % 12 != 0):
-			filter_data.append(data_box[-(len(data_box) % 12):])
+			filter_data.append(data_box)
 
 		for i in range(0, len(filter_data)):
 			if page_id == i:
