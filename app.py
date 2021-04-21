@@ -52,7 +52,8 @@ def taipei_api():
 		for i in range(0, len(filter_data)):
 			if page_id == i:
 				return jsonify(filter_data[i])
-			
+			elif page_id > len(filter_data):
+				return jsonify(filter_error)
 	elif 'page' in request.args:
 		return jsonify(search_page(page_id))
 	else:
