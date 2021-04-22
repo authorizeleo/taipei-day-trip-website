@@ -27,7 +27,6 @@ cursor = cnx.cursor()
 
 
 
-
 def create_database(cursor):
     try:
         cursor.execute(
@@ -61,7 +60,6 @@ TABLES['sightseeing'] = (
     "  `latitude` float NOT NULL,"
     "  `longitude` float NOT NULL,"
     "  `images` int NOT NULL,"
-    "  `page` int NOT NULL,"
     "  PRIMARY KEY (`id`), UNIQUE KEY `images` (`images`)"
     ") ENGINE=InnoDB")
 
@@ -81,9 +79,6 @@ TABLES['image'] = (
     
 
 
-
-
-
 for table_name in TABLES:
     table_description = TABLES[table_name]
     try:
@@ -98,8 +93,8 @@ for table_name in TABLES:
         print('OK')
 
 add_data = ("INSERT IGNORE INTO sightseeing "
-               "(id, name, category, description, address, transport, mrt, latitude, longitude, images, page) "
-               "VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s) ")
+               "(id, name, category, description, address, transport, mrt, latitude, longitude, images) "
+               "VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s) ")
 
 add_image = ("INSERT IGNORE INTO image "
             "(image_no, src) "
@@ -119,11 +114,7 @@ with open(r"data/taipei-attractions.json", encoding="utf-8") as json_file:
         latitude = f["latitude"]
         longitude = f["longitude"]
         images = f['_id']
-        if images % 12 != 0:
-            page = int(images / 12)
-        else:
-            page = int(images / 12) -1
-        taipei_data = (sightseeing_id, name, category, description, address, transport, mrt, latitude, longitude, images, page)
+        taipei_data = (sightseeing_id, name, category, description, address, transport, mrt, latitude, longitude, images)
         cursor.execute(add_data, taipei_data)
         cnx.commit()
         imagefile = f['file'].split('http:')
@@ -152,23 +143,42 @@ def search_page(page_id):
         return error
     page_box = []
     try:
+        page_id = page_id + 1
+        max_num = page_id * 12 
+        min_num = max_num - 11
+        cursor.execute("SELECT * FROM sightseeing  WHERE id BETWEEN {} AND {}".format(min_num, max_num))
+        result = cursor.fetchall()
         for i in range(0,12):
-            cursor.execute("SELECT * FROM sightseeing  WHERE page = {}".format(page_id))
-            result = cursor.fetchall()
-            # print(result[0])
-            page_box.append(create_api_data(result[i]))
+            data = create_api_data(result[i])
+            if page_id > 26:
+                data['nextPage'] = None
+            else:
+                data['nextPage'] = page_id
+            page_box.append(data)
         return page_box
     except:
         return page_box
     
         
 
-def keyword_search(keyword):
+def keyword_search(keyword, page_id):
+    page_id = page_id * 12
     filter_box =[]
-    cursor.execute("SELECT * FROM sightseeing  WHERE name like'%{}%' ".format(keyword))
+    cursor.execute("SELECT * FROM sightseeing  WHERE name like'%{}%' ORDER BY id LIMIT 13 OFFSET {} ".format(keyword, page_id))
     result = cursor.fetchall()
-    for r in result:
-        filter_box.append(create_api_data(r))
+    if len(result) == 0 :
+        error_keyword_page = {
+            "error": True,
+            "message": '無資料顯示'
+        }
+        return error_keyword_page
+    for r in result[:12]:
+        data = create_api_data(r)
+        if(len(result) > 12):
+            data['nextPage'] = int(page_id / 12) + 1
+        else:
+            data['nextPage'] = None
+        filter_box.append(data)
     return filter_box 
     
 
@@ -181,19 +191,14 @@ def search_attraction_Id(attraction_Id):
     
 
 def create_api_data(result):
-    taipei_api_data = {}
     img_box = []
     cursor.execute("SELECT src FROM  image  WHERE  image_no = {}".format(result[0]))
     img_src = cursor.fetchall()
     for img in img_src:
         img_box.append(img[0])
     
-    if result[-1] > 25:
-        page = None
-    else:
-        page = result[-1] + 1
     taipei_api_data = {
-                "nextPage": page,
+                "nextPage": "",
                 "data": [
                     {
                     "id": result[0],
