@@ -1,10 +1,6 @@
 from flask import *
-import sys,os
-from data.data import search_page, keyword_search, search_attraction_Id
-sys.path.append(os.path.dirname(__file__) + os.sep + '../')
-app=Flask(__name__)
-app.config["JSON_AS_ASCII"]=False
-app.config["TEMPLATES_AUTO_RELOAD"]=True
+from app import app
+from app.models.data import search_page, keyword_search, search_attraction_Id
 
 # Pages
 @app.route("/")
@@ -50,8 +46,6 @@ def show_attraction(attractionId):
 		return jsonify(id_error)
 	return jsonify(search_attraction_Id(attractionId))
 
-
-	
 
 
 if __name__ == '__main__':
