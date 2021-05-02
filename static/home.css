@@ -1,0 +1,238 @@
+*{
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+
+.NavBar-box{
+    display: flex;
+    justify-content: center;
+}
+
+.NavBar{
+    height: 54px;
+    max-width: 1200px;
+    background-color: #fff;
+    display: flex;
+    width:100%;
+    justify-content: space-between;
+}
+
+.title {      
+    font-size: 30px;
+    margin:9px ;
+    line-height: 34px;
+    color:#448899;  
+    font-weight: 700;
+}
+
+ul{
+    display: flex;
+    line-height: 13.3px;
+}
+
+li{
+    margin: 20px 10px;
+    color:#666666;
+    font-weight: 400;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+
+/* header */
+.header-box{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    background: linear-gradient(135deg, #AADDEE 0%, #66AABB 100%); 
+}
+
+.header{
+    height: 320px;
+    max-width: 1200px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.header-introduce{
+    margin-left:20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;  
+}
+
+.header-title{
+    text-shadow: 0px 0px 30px 0px #AABBCC;
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 24px;
+    color: #f8f8f8;
+    margin-top:85px
+}
+
+.header-img{
+    width: 650px;
+    height: 320px;
+    background: url(/static/welcome\ 1.png) ;
+    background-size: 100% 100%;
+    margin-left:208px;
+}
+
+
+
+.header-main{
+    color: #f8f8f8;
+    line-height: 13px;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    margin-top:15px
+}
+
+.searchBox{
+    display: flex;
+    margin-top:40px
+}
+
+.input-search{
+    width: 400px;
+    height: 46px;
+    background: #FFFFFF;
+    font-size: 16px;
+    line-height: 13px;
+    display: flex;
+    align-items: center;
+    padding:2px 15px;
+    outline: none;
+    border: none;
+    box-sizing: border-box;
+    border-radius: 3px 0px 0px 3px;
+}
+
+
+
+.searchBtnBox{
+    width: 60px;
+    height: 46px;
+    background:#448899;
+    border-radius: 0px 3px 3px 0px;
+    cursor: pointer;
+    position: relative;
+}
+
+.searchBtn{
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    left: 0px;
+    top: 0px;
+    margin: 8px 15px;
+    background-image: url(/static/icon_search.png) ;
+}
+
+
+/* sightseeing */
+.sightseeing-outbox{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top:40px;
+    height: 100%;
+    margin-bottom:40px;
+    
+}
+
+.sightseeingBox{
+    display: flex;
+    flex-wrap: wrap;
+    box-sizing: border-box;
+    max-width: 1200px;
+}
+
+.sightseeing{
+    display: flex;
+    height: 242px;
+    width:265px;
+    border:1px solid #EFF3F5;
+    border-radius: 5px; 
+    margin:15px;
+    flex-direction: column;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+.sightseeing-img{
+    height: 100%;
+    background-size: cover;
+    background-repeat: no-repeat;
+
+}
+
+
+
+.sightseeing-title{
+    width: 250px;
+    height: 22px;
+    font-size: 16px;
+    margin: 7px 10px ;
+    color: #757575;
+}
+
+
+.sightseeing-main{
+    display: flex;
+    line-height: 13px;
+    margin:15px 10px 12px;
+    font-size: 16px;
+    height: 20px;
+    justify-content: space-between;
+    color: #757575;
+}
+
+
+/* footer */
+.footer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 104px;
+    background: #757575;
+    user-select: none;
+}
+
+@media (max-width: 1200px){
+    .sightseeingBox{
+        justify-content: center;
+    }
+
+    .sightseeing{
+        width:322px;
+        height:280px;
+    }
+    .header{
+        justify-content: flex-start;
+        position: relative;
+        margin: 0 20px 
+        
+    }
+    .header-introduce{
+        z-index: 2;
+    }
+ 
+
+    .header-img{
+        position: absolute;
+        right:-80px;
+        bottom:0px;
+        z-index:1;
+        width:276px;
+        height: 148px;
+    }
+
+    .input-search{
+        width:230px
+    }
+}
