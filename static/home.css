@@ -203,7 +203,7 @@ li{
     user-select: none;
 }
 
-@media (max-width: 600px){
+@media (max-width: 1200px){
     .sightseeingBox{
         justify-content: center;
     }
