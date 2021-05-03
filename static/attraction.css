@@ -336,7 +336,8 @@ label::before{
 
     .top_order{   
         display: flex;
-        align-items: flex-start;
+        align-self: flex-start;
+        margin-left:45px;
     }
     .main-detail{
         width: 330px;
