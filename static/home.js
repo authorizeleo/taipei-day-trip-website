@@ -13,11 +13,12 @@ fetch(api)
   })
   .then((myJson) => {
     for (let x = 0; x < myJson.length; x++ ){
+        let id = myJson[x]['data'][0]['id']
         let img = myJson[x]['data'][0]['images'][0] 
         let title = myJson[x]['data'][0]['name']
         let mrt = myJson[x]['data'][0]['mrt'] || '無'
         let cat2 = myJson[x]['data'][0]['category']
-        create_sightseeing(img, title, mrt, cat2)
+        create_sightseeing(id, img, title, mrt, cat2)
     }
     num = myJson[0]['nextPage']
     api = '/api/attractions?page=' + num
@@ -28,8 +29,8 @@ fetch(api)
 
 let mix = debounce(getData)
 window.addEventListener('scroll', mix)
-const create_sightseeing = (img, title, mrt, cat2) => {
-
+const create_sightseeing = (id, img, title, mrt, cat2) => {
+    const a_href = document.createElement('a')
     const sightseeing = document.createElement('DIV')
     const sightseeing_img = document.createElement('DIV')
     const sightseeing_title = document.createElement('H4')
@@ -42,14 +43,16 @@ const create_sightseeing = (img, title, mrt, cat2) => {
     sightseeing_title.className = 'sightseeing-title'
     sightseeing_main.className ='sightseeing-main'
 
-
+    a_href.href = '/attraction/' + id
+    a_href.style.textDecoration = 'none'
     sightseeing_img.style.backgroundImage= `url(${img})`
     sightseeing_title.textContent = title
     sightseeing_mrt.textContent = mrt
     sightseeing_cat2.textContent = cat2
 
     
-    list.appendChild(sightseeing)
+    list.appendChild(a_href)
+    a_href.appendChild(sightseeing)
     sightseeing.appendChild(sightseeing_img)
     sightseeing.appendChild(sightseeing_title)
     sightseeing.appendChild(sightseeing_main)
@@ -67,11 +70,12 @@ function getData() {
       })
       .then((myJson) => {
         for (let x = 0; x < myJson.length; x++ ){
+            let id = myJson[x]['data'][0]['id']
             let img = myJson[x]['data'][0]['images'][0] 
             let title = myJson[x]['data'][0]['name']
             let mrt = myJson[x]['data'][0]['mrt'] || '無'
             let cat2 = myJson[x]['data'][0]['category']
-            create_sightseeing(img, title, mrt, cat2)
+            create_sightseeing(id, img, title, mrt, cat2)
         }
         num = myJson[0]['nextPage']
         api = '/api/attractions?page=' + num
@@ -108,11 +112,12 @@ Search_Btn.addEventListener('click', () => {
   })
   .then((myJson) =>{
     for( let x = 0 ; x < myJson.length ; x++) {
+      let id = myJson[x]['data'][0]['id']
       let img = myJson[x]['data'][0]['images'][0] 
       let title = myJson[x]['data'][0]['name']
       let mrt = myJson[x]['data'][0]['mrt'] || '無'
       let cat2 = myJson[x]['data'][0]['category']
-      create_sightseeing(img, title, mrt, cat2)
+      create_sightseeing(id, img, title, mrt, cat2)
       
     }
      page = myJson[0]['nextPage']
@@ -139,7 +144,6 @@ Search_Btn.addEventListener('click', () => {
           let mrt = myJson[x]['data'][0]['mrt'] || '無'
           let cat2 = myJson[x]['data'][0]['category']
           create_sightseeing(img, title, mrt, cat2)
-          
         }
          page = myJson[0]['nextPage']
          search_api = '/api/attractions?page='+ page +'&keyword=' + search.value
