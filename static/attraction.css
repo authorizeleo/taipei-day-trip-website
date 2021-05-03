@@ -211,7 +211,7 @@ li{
 .traffic > p {
     font-size: 16px;
     color: #666666;
-    line-height: 23.17px;
+    line-height: 30px;
     font-weight: 400;
 }
 
@@ -240,6 +240,10 @@ label::before{
     left:-40px;
     background-color: #fff;
     cursor: pointer;
+}
+
+.input_date{
+    padding:5px 5px 5px 10px
 }
 
 .start-travel{
@@ -302,5 +306,6 @@ label::before{
     }
     .main-detail{
         width: 330px;
+        line-height: 26px;
     }
 }

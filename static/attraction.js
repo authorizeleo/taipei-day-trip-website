@@ -49,7 +49,7 @@ left.addEventListener('click', () => {
     num = num < 0 ?  imgsBox.length-1 : num
     sightseeing_img.style.backgroundImage = `url(${imgsBox[num]})`
     sightseeing_img.style.opacity = 1
-    sightseeing_img.style.transition = 0.5 + 's'
+    // sightseeing_img.style.transition = 0.5 + 's'
     li_all.forEach((img, i ) => {
         console.log(num == i)
         if(num == i ) {
@@ -68,7 +68,7 @@ right.addEventListener('click', () => {
     num = num > imgsBox.length-1 ?  0 : num
     sightseeing_img.style.backgroundImage = `url(${imgsBox[num]})`
     sightseeing_img.style.opacity = 1
-    sightseeing_img.style.transition = 0.5 + 's'
+    // sightseeing_img.style.transition = 0.5 + 's'
     li_all.forEach((img, i ) => {
         if(num == i ) {
             img.style.backgroundColor = 'black'
@@ -109,7 +109,7 @@ const click_imgs = (() =>{
             
             sightseeing_img.style.backgroundImage = `url(${imgsBox[num]})`
             sightseeing_img.style.opacity = 1
-            sightseeing_img.style.transition = 0.5 + 's'
+            // sightseeing_img.style.transition = 0.5 + 's'
         })
     })
 })
