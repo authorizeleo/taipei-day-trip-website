@@ -80,71 +80,42 @@ li{
     height: 15px;
     background-color: #fff;
     margin-right:15px;
-    margin-top:420px;
+    margin-top:-30px;
 }
 
 .sightseeing-imgBox > ul > li:nth-of-type(1){
     background-color: #000;
 }
 
-
-
-#left::before{
-    content:"<";
-    position: absolute;
-    top:0px;
-    left:7px
+.move{
+    height:100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding:5px;
 }
 
-#left::after{
-    content: "";
-    width: 36px;
+.left,
+.right{
+    width:36px;
     height: 36px;
-    position: absolute;
+    font-size: 20px;
+    padding:2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #E8E8E8;
+    border: 1px solid #E8E8E8;
     border-radius: 100%;
-    background-color: rgba(255,255,255,0.3);
-    user-select: none;
     cursor: pointer;
-    top:11px;
-    left:6px;
+
 }
 
-#right::before{
-    content: ">";
-    position: absolute;
-    left:490px;
-    top:0px
-}
-#right::after{
-    content: "";
-    width: 36px;
-    height: 36px;
-    position: absolute;
-    border-radius: 100%;
-    background-color: rgba(255,255,255,0.3);
-    left:486px;
-    top:11px;
-}
-
-#left,
-#right{
-    position: relative;
-    top:40%;
-    transition: 0.5s;
-    cursor: pointer;
-}
-
-
-#left:hover::after,
-#right:hover::after{
-    background-color: rgba(255,255,255,0.5);
-}
-
-#left:hover,
-#right:hover{
-    color: #000;
-}
-
+ .left:hover,
+ .right:hover{
+     background-color: #fff;
+     color:black
+ }
 
 .orderBox{
     margin-top:40px;
@@ -312,17 +283,7 @@ label::before{
         justify-content: center;
         align-items: center;
     }
-    #right::before{
-        left:320px
-    }
-    #right::after{
-        left:312px;
-    }
 
-    .sightseeing-imgBox > ul > li{
-        margin-top: 320px;
-    }
-    
     .order{
         width: 340px;
         height: 300px;
