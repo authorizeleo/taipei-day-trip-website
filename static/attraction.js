@@ -26,7 +26,7 @@ fetch(api)
         const cat2 = json['category']
         input_data(name, imgsBox, mrt, cat2, des, address, traffic)
         circle()
-        click_circle_imgs()
+        click_circle()
     })
 
 
@@ -41,16 +41,31 @@ function input_data(name, imgs, mrt, cat2, des, address, traffic) {
 }
 
 let num = 0
+let pos = 0
 left.addEventListener('click', () => {
+    let calc_length = imgsBox.length-1
+    pos += 100
+    pos = pos == 100  ? calc_length * -100 : pos
+    const move = document.querySelectorAll('.Carousel > li')
+    move.forEach( li => {
+        li.style.transform = `translateX(${pos}%)`
+    })
     num--
-    num = num < 0 ?  imgsBox.length-1 : num
-    change_bottom_circle(num)
+    num = num < 0 ?  calc_length : num
+    change_circle_color(num)
 })
 
 right.addEventListener('click', () => {
+    let calc_length = imgsBox.length-1
+    pos -= 100
+    pos = pos == calc_length * -100 -100  ? 0 : pos
+    const move = document.querySelectorAll('.Carousel > li ')
+    move.forEach( li=> {
+        li.style.transform = `translateX(${pos}%)`
+    })
     num++
-    num = num > imgsBox.length-1 ?  0 : num
-    change_bottom_circle(num)
+    num = num > calc_length ?  0 : num
+    change_circle_color(num)
 })
 
 time_am.addEventListener('change', () => {
@@ -69,20 +84,18 @@ const circle = (() => {
     }
 })
 
-const click_circle_imgs = (() =>{
+const click_circle = (() =>{
     let circle_all = document.querySelectorAll('#CarouselCircle >  li' )
     circle_all.forEach((img, i) => {
         img.addEventListener('click', () => {
             num = i
-            circle_all.forEach((ig, index) => {
-                ig.style.backgroundColor = num == index ? 'black' :'white'
-            })
-            img_change(num)
+            pos = num * -100
+            change_circle_color(num)
         })
     })
 })
 
-const change_bottom_circle = ((n) => {
+const change_circle_color = ((n) => {
     let li_all = document.querySelectorAll('#CarouselCircle >  li' )
     img_change(n)
     li_all.forEach((img, i ) => {
@@ -105,9 +118,10 @@ const input_image = ((imgs) => {
 
 const img_change = ((n)=>{
     const image_li = document.querySelectorAll('.Carousel > li')
-    image_li.forEach((li, i) =>{   
+    image_li.forEach((li,i) =>{   
         li.classList.add('space')
-        if (n == i){
+        li.style.transform = `translateX(${n*-100}%)`
+        if( i == n) {
             li.classList.remove('space')
         }
     })
