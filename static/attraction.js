@@ -5,13 +5,13 @@ const sight_cat2 = document.getElementById('cat2')
 const sight_des = document.getElementById('des')
 const sight_address = document.getElementById('address')
 const transport = document.getElementById('transport')
-const sightseeing_img = document.getElementById('imgBox')
-const left  = document.getElementById('left')
-const right = document.getElementById('right')
+const sightseeing_img = document.querySelector('.Carousel')
+const left  = document.querySelector('.CarouselLeft')
+const right = document.querySelector('.CarouselRight')
 const time_am = document.getElementById('time_am')
 const time_pm = document.getElementById('time_pm')
 const travel_price = document.getElementById('price')
-const ul = document.getElementById('ul')
+const ul = document.getElementById('CarouselCircle')
 let imgsBox ;
 fetch(api)
     .then(res => res.json())
@@ -21,61 +21,36 @@ fetch(api)
         const address = json['address']
         const des = json['description']
         imgsBox = json['images']
-        const traffic = json['transport']
-        const mrt = json['mrt']
+        const traffic = json['transport'] || '無'
+        const mrt = json['mrt'] || '無'
         const cat2 = json['category']
         input_data(name, imgsBox, mrt, cat2, des, address, traffic)
         circle()
-        click_imgs()
-        const circle_all = document.querySelectorAll('#imgBox > ul > li' )
+        click_circle_imgs()
     })
 
 
-const input_data = (name, imgs, mrt, cat2, des, address, traffic) => {
+function input_data(name, imgs, mrt, cat2, des, address, traffic) {
+    input_image(imgs)
     sight_name.textContent = name
     sight_mrt.textContent = mrt
     sight_cat2.textContent = cat2
     sight_des.textContent = des
     sight_address.textContent = address
     transport.textContent = traffic
-    sightseeing_img.style.backgroundImage = `url(${imgs[0]})`
-    sightseeing_img.style.opacity =1
 }
 
 let num = 0
 left.addEventListener('click', () => {
-    let li_all = document.querySelectorAll('#imgBox > ul > li' )
     num--
     num = num < 0 ?  imgsBox.length-1 : num
-    sightseeing_img.style.backgroundImage = `url(${imgsBox[num]})`
-    sightseeing_img.style.opacity = 1
-    // sightseeing_img.style.transition = 0.5 + 's'
-    li_all.forEach((img, i ) => {
-        console.log(num == i)
-        if(num == i ) {
-            console.log(img)
-            img.style.backgroundColor = 'black'
-        }else{
-            img.style.backgroundColor = 'white'
-        }
-    })
-    
+    change_bottom_circle(num)
 })
 
 right.addEventListener('click', () => {
-    let li_all = document.querySelectorAll('#imgBox > ul > li' )
     num++
     num = num > imgsBox.length-1 ?  0 : num
-    sightseeing_img.style.backgroundImage = `url(${imgsBox[num]})`
-    sightseeing_img.style.opacity = 1
-    // sightseeing_img.style.transition = 0.5 + 's'
-    li_all.forEach((img, i ) => {
-        if(num == i ) {
-            img.style.backgroundColor = 'black'
-        }else{
-            img.style.backgroundColor = 'white'
-        }
-    })
+    change_bottom_circle(num)
 })
 
 time_am.addEventListener('change', () => {
@@ -87,29 +62,53 @@ time_pm.addEventListener('change', () => {
 })
 
 
-const circle = ( () => {
+const circle = (() => {
     for(let x = 0; x < imgsBox.length; x++) {
         let li = document.createElement('li')
         ul.appendChild(li)
     }
 })
 
-const click_imgs = (() =>{
-    let circle_all = document.querySelectorAll('#imgBox > ul > li' )
+const click_circle_imgs = (() =>{
+    let circle_all = document.querySelectorAll('#CarouselCircle >  li' )
     circle_all.forEach((img, i) => {
         img.addEventListener('click', () => {
             num = i
             circle_all.forEach((ig, index) => {
-                if(num == index ) {
-                    ig.style.backgroundColor = 'black'
-                }else{
-                    ig.style.backgroundColor = 'white'
-                }
+                ig.style.backgroundColor = num == index ? 'black' :'white'
             })
-            
-            sightseeing_img.style.backgroundImage = `url(${imgsBox[num]})`
-            sightseeing_img.style.opacity = 1
-            // sightseeing_img.style.transition = 0.5 + 's'
+            img_change(num)
         })
+    })
+})
+
+const change_bottom_circle = ((n) => {
+    let li_all = document.querySelectorAll('#CarouselCircle >  li' )
+    img_change(n)
+    li_all.forEach((img, i ) => {
+        img.style.backgroundColor = n == i ? 'black' :'white'
+    })
+})
+
+const input_image = ((imgs) => {
+    imgs.forEach((img, i ) => {
+        const image = document.createElement('img')
+        image.src = img
+        const image_li = document.createElement('li')
+        if( i != 0){
+            image_li.classList.add('space')
+        }
+        image_li.appendChild(image)
+        sightseeing_img.appendChild(image_li)
+    })
+})
+
+const img_change = ((n)=>{
+    const image_li = document.querySelectorAll('.Carousel > li')
+    image_li.forEach((li, i) =>{   
+        li.classList.add('space')
+        if (n == i){
+            li.classList.remove('space')
+        }
     })
 })

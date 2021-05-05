@@ -3,6 +3,7 @@
     margin: 0;
     padding: 0;
     text-decoration: none;
+    font-family: 'Noto Sans TC', sans-serif;
 }
 
 /* navBar */
@@ -28,12 +29,12 @@
     font-weight: 700;
 }
 
-ul{
+.NavBar > ul{
     display: flex;
     line-height: 13.3px;
 }
 
-li{
+.NavBar > ul > li{
     margin: 20px 10px;
     color:#666666;
     font-weight: 400;
@@ -54,68 +55,141 @@ li{
     display: flex;
 }
 
-.sightseeing-imgBox{
-    width:540px;
-    height: 460px;
-    /* background: url("http://www.travel.taipei/d_upload_ttn/sceneadmin/pic/11000848.jpg"); */
-    background-size: 100% 100%;
+.CarouselBox {
     margin:37px 30px;
-    border-radius: 5px;
-    position: relative;
-    font-size: 40px;
+    display: flex;
+    width: 540px;
+    height: 460px;
+    overflow: hidden;
     user-select: none;
-    opacity: 0.4;
-    color:#666666
+    opacity: 1;
+    transition: 0.5s;
+    color:#666666;
+    position: relative;
+    font-size: 38px;
+    transition: 0.5s;
 }
 
-.sightseeing-imgBox > ul{
-    display: flex;
-    justify-content: center;
-}
-
-
-.sightseeing-imgBox > ul > li {
-    border-radius: 100%;
-    width: 15px;
-    height: 15px;
-    background-color: #fff;
-    margin-right:15px;
-    margin-top:-30px;
-}
-
-.sightseeing-imgBox > ul > li:nth-of-type(1){
-    background-color: #000;
-}
-
-.move{
-    height:100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding:5px;
-}
-
-.left,
-.right{
-    width:36px;
-    height: 36px;
-    font-size: 20px;
-    padding:2px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #E8E8E8;
-    border: 1px solid #E8E8E8;
-    border-radius: 100%;
+.CarouselLeft::after{
+    content: '←';
+    position: absolute;
+    left:10px;
+    top:42.3%;
+    user-select: none;
     cursor: pointer;
+    transition: 1s;
+}
+
+
+.CarouselLeft:hover::after,
+.CarouselRight:hover::after{
+    color:black; 
+}
+
+.CarouselLeft:hover::before,
+.CarouselRight:hover::before{
+    background-color: #fff;
+}
+
+
+.CarouselRight::after{
+    position: absolute;
+    content:"→";
+    right:10px;
+    top:42.3%;
+    user-select: none;
+    cursor: pointer;
+    transition: 1s;
 
 }
 
- .left:hover,
- .right:hover{
-     background-color: #fff;
-     color:black
- }
+.CarouselLeft::before{
+    content: "";
+    position: absolute;
+    width:45px;
+    height: 45px;
+    background-color: rgba(255,255,255,0.5);
+    left:5px;
+    top:44%;
+    border-radius: 100%;
+    user-select: none;
+    cursor: pointer;
+    transition: 1s;
+}
+
+.CarouselRight::before{
+    content: "";
+    position: absolute;
+    width:45px;
+    height: 45px;
+    background-color: rgba(255,255,255,0.5);
+    right:5px;
+    top:44%;
+    border-radius: 100%;
+    user-select: none;
+    cursor: pointer;
+    transition: 1s;
+}
+
+.Carousel{
+    display: flex;
+    overflow: hidden;
+    justify-content: center;
+    border-radius: 5px;
+}
+
+.Carousel > li {
+    width: 540px;
+    height: 460px;
+}
+
+.space {
+    display:none;
+    opacity: 0;
+}
+
+
+    
+
+.Carousel > li > img {
+    width: 100%;
+    height: 100%;
+    object-fit:cover;
+    animation: 2s fade;
+}
+
+@keyframes fade {
+    from{opacity: 0;}
+    to{opacity: 1;}
+}
+
+.CarouselCircle{
+    position: absolute;
+    bottom:5px;
+    width: 100%;
+    right:0%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+
+
+.CarouselCircle > li {
+    border-radius: 100%;
+    width: 7px;
+    height: 7px;
+    background-color: #fff;
+    margin-right:17px;
+    transition: 0.5s;
+}
+
+.CarouselCircle > li:nth-of-type(1){
+    background-color: #000 ;
+}
+
+
 
 .orderBox{
     margin-top:40px;
@@ -125,6 +199,7 @@ li{
     justify-content: flex-start;
     color:#666666;
 }
+
 .top_order{
     display: flex;
     flex-direction: column;
@@ -211,7 +286,7 @@ li{
 .traffic > p {
     font-size: 16px;
     color: #666666;
-    line-height: 30px;
+    line-height: 23.17px;
     font-weight: 400;
 }
 
@@ -243,7 +318,7 @@ label::before{
 }
 
 .input_date{
-    padding:5px 5px 5px 10px
+    padding:5px 5px 5px 10px;
 }
 
 .start-travel{
@@ -278,14 +353,19 @@ label::before{
         align-items: center;
     }
     .main-introduce{
-        display: flex;
         flex-direction: column;
-    }
-    .sightseeing-imgBox{
-        width: 360px;
-        height: 350px;
-        justify-content: center;
         align-items: center;
+    }
+
+    .CarouselBox{
+        width: 466px;
+        height: 350px;
+        padding:0px 53px
+    }
+
+    .Carousel > li {
+        width: 466px;
+        height: 350px;
     }
 
     .order{
@@ -293,19 +373,67 @@ label::before{
         height: 300px;
     }
     .orderBox{
-        margin-top:20px;
+        margin-top:0px;
         display: flex;
         justify-content: center;
         align-items: center;
+    }
+    .CarouselCircle{
+        margin-left:50px ;
+    }
+    .CarouselCircle > li {
+        margin-right:12px;
     }
 
     .top_order{   
         display: flex;
         align-self: flex-start;
-        margin-left:45px;
+        margin-left:0px;
     }
     .main-detail{
         width: 330px;
         line-height: 26px;
+    }
+    .CarouselLeft::after{
+        left:70px;
+    }
+
+    .CarouselRight::after{
+        right:70px;
+    }
+    .CarouselRight::before{
+        right:65px;
+        top:44%
+    }
+    .CarouselLeft::before{
+        left:65px;
+        top:44%
+    }
+    .introduce > p,
+    .address > p ,
+    .traffic > p {
+    line-height: 30px;
+    }
+
+}
+
+@media (max-width: 500px){
+    .CarouselLeft::after{
+        left:105px;
+    }
+
+    .CarouselRight::after{
+        right:105px;
+    }
+    .CarouselRight::before{
+        right:100px;
+        top:44%
+    }
+    .CarouselLeft::before{
+        left:100px;
+        top:44%
+    }
+    .top_order{
+        margin-left: 25px;
     }
 }
