@@ -1,11 +1,11 @@
 const footer = document.querySelector('.footer')
 const search = document.getElementById('search')
 const Search_Btn = document.querySelector('.searchBtnBox')
-const list = document.getElementById('sightseeingBox')
-let filter = false
-let check_index = true
-let num = 0 ;
-let api = '/api/attractions?page=' + num;
+const sightseeing_list = document.getElementById('sightseeingBox')
+let filter_show = false
+let init_show = true
+let init_page = 0 ;
+let api_home = '/api/attractions?page=' + init_page;
 let delay_get_data = debounce(getData)
 
 const for_data = (data) =>{
@@ -27,24 +27,24 @@ const fetch_data = (api_data) => {
       })
       .then((myJson) => {
         for_data(myJson)
-        num = myJson[0]['nextPage']
-        api = '/api/attractions?page=' + num
+        init_page = myJson[0]['nextPage']
+        api_home = '/api/attractions?page=' + init_page
       }); 
 }
 
-window.onload = () => {
-  fetch_data(api)
-}
+
+fetch_data(api_home)
+
 
 
 window.addEventListener('scroll', () => {
   const { bottom } = footer.getBoundingClientRect()
-  if(window.innerHeight + 1   > bottom){
-    if(check_index){
+  if(window.innerHeight + 100   > bottom){
+    if(init_show){
       delay_get_data()
     }
-    if(filter){
-      delay_connect()
+    if(filter_show){
+      delay_filter_data()
     }
   }   
 })
@@ -55,7 +55,7 @@ async function connect_filter_data(){
   await search_data(search_api)
 }
 
-let delay_connect = debounce(connect_filter_data)
+let delay_filter_data = debounce(connect_filter_data)
 const create_sightseeing = (id, img, title, mrt, cat2) => {
     const a_href = document.createElement('a')
     const sightseeing = document.createElement('DIV')
@@ -67,14 +67,14 @@ const create_sightseeing = (id, img, title, mrt, cat2) => {
     sightseeing.className = 'sightseeing'
     sightseeing_img.className = 'sightseeing-img'
     sightseeing_title.className = 'sightseeing-title'
-    sightseeing_main.className ='sightseeing-main'
+    sightseeing_main.className ='sightseeing-content'
     a_href.href = '/attraction/' + id
     a_href.style.textDecoration = 'none'
     sightseeing_img.style.backgroundImage= `url(${img})`
     sightseeing_title.textContent = title
     sightseeing_mrt.textContent = mrt
     sightseeing_cat2.textContent = cat2
-    list.appendChild(a_href)
+    sightseeing_list.appendChild(a_href)
     a_href.appendChild(sightseeing)
     sightseeing.appendChild(sightseeing_img)
     sightseeing.appendChild(sightseeing_title)
@@ -85,8 +85,8 @@ const create_sightseeing = (id, img, title, mrt, cat2) => {
 
 
 async function getData() {
-    if(num == null) return
-    await fetch_data(api)
+    if(init_page == null) return
+    await fetch_data(api_home)
 }   
 
 function debounce(func, delay=800) {
@@ -104,11 +104,11 @@ function debounce(func, delay=800) {
 let page = null
 let search_api = null
 Search_Btn.addEventListener('click', () => {
-  check_index = false
+  init_show = false
   filter = true
   page = 0
   search_api = `/api/attractions?page=${page}&keyword=${search.value}`  
-  list.innerHTML = "" 
+  sightseeing_list.innerHTML = "" 
   if(page == null) return
   search_data(search_api) 
 })
@@ -125,5 +125,5 @@ const search_data = ((api_data) => {
         if(page == null) return
         search_api = `/api/attractions?page=${page}&keyword=${search.value}` 
       })
-      .catch(() => list.textContent = '無任何相關景點')
+      .catch(() => sightseeing_list.textContent = '無任何相關景點')
 })

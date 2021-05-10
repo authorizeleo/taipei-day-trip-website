@@ -1,11 +1,11 @@
-let api = '/api/attraction/' + location.href.split('attraction/')[1]
-const sight_name = document.getElementById('name')
-const sight_mrt = document.getElementById('mrt')
-const sight_cat2 = document.getElementById('cat2')
-const sight_des = document.getElementById('des')
-const sight_address = document.getElementById('address')
-const transport = document.getElementById('transport')
-const sightseeing_img = document.querySelector('.Carousel')
+let api_sights = '/api/attraction/' + location.href.split('attraction/')[1]
+const sights_name = document.getElementById('name')
+const sights_mrt = document.getElementById('mrt')
+const sights_cat2 = document.getElementById('cat2')
+const sights_des = document.getElementById('des')
+const sights_address = document.getElementById('address')
+const sights_transport = document.getElementById('transport')
+const sights_img = document.querySelector('.Carousel')
 const left  = document.querySelector('.CarouselLeft')
 const right = document.querySelector('.CarouselRight')
 const time_am = document.getElementById('time_am')
@@ -13,31 +13,33 @@ const time_pm = document.getElementById('time_pm')
 const travel_price = document.getElementById('price')
 const ul = document.getElementById('CarouselCircle')
 let imgsBox ;
-fetch(api)
-    .then(res => res.json())
-    .then((myJson) => {
-        const json = myJson['data'][0]
-        const name = json['name']
-        const address = json['address']
-        const des = json['description']
-        imgsBox = json['images']
-        const traffic = json['transport'] || '無'
-        const mrt = json['mrt'] || '無'
-        const cat2 = json['category']
-        input_data(name, imgsBox, mrt, cat2, des, address, traffic)
-        circle()
-        click_circle()
-    })
+
+fetch(api_sights)
+.then(res => res.json())
+.then((myJson) => {
+    const json = myJson['data'][0]
+    const name = json['name']
+    const address = json['address']
+    const des = json['description']
+    imgsBox = json['images']
+    const traffic = json['transport'] || '無大眾運輸工具'
+    const mrt = json['mrt'] || '無捷運站'
+    const cat2 = json['category']
+    input_data(name, imgsBox, mrt, cat2, des, address, traffic)
+    produce_circle()
+    click_circle()
+})
+
 
 
 function input_data(name, imgs, mrt, cat2, des, address, traffic) {
     input_image(imgs)
-    sight_name.textContent = name
-    sight_mrt.textContent = mrt
-    sight_cat2.textContent = cat2
-    sight_des.textContent = des
-    sight_address.textContent = address
-    transport.textContent = traffic
+    sights_name.textContent = name
+    sights_mrt.textContent = mrt
+    sights_cat2.textContent = cat2
+    sights_des.textContent = des
+    sights_address.textContent = address
+    sights_transport.textContent = traffic
 }
 
 let num = 0
@@ -46,10 +48,7 @@ left.addEventListener('click', () => {
     let calc_length = imgsBox.length-1
     pos += 100
     pos = pos == 100  ? calc_length * -100 : pos
-    const move = document.querySelectorAll('.Carousel > li')
-    move.forEach( li => {
-        li.style.transform = `translateX(${pos}%)`
-    })
+    move_image(pos)
     num--
     num = num < 0 ?  calc_length : num
     change_circle_color(num)
@@ -59,10 +58,7 @@ right.addEventListener('click', () => {
     let calc_length = imgsBox.length-1
     pos -= 100
     pos = pos == calc_length * -100 -100  ? 0 : pos
-    const move = document.querySelectorAll('.Carousel > li ')
-    move.forEach( li=> {
-        li.style.transform = `translateX(${pos}%)`
-    })
+    move_image(pos)
     num++
     num = num > calc_length ?  0 : num
     change_circle_color(num)
@@ -77,7 +73,7 @@ time_pm.addEventListener('change', () => {
 })
 
 
-const circle = (() => {
+const produce_circle = (() => {
     for(let x = 0; x < imgsBox.length; x++) {
         let li = document.createElement('li')
         ul.appendChild(li)
@@ -109,20 +105,27 @@ const input_image = ((imgs) => {
         image.src = img
         const image_li = document.createElement('li')
         if( i != 0){
-            image_li.classList.add('space')
+            image_li.classList.add('unseen')
         }
         image_li.appendChild(image)
-        sightseeing_img.appendChild(image_li)
+        sights_img.appendChild(image_li)
     })
 })
 
 const img_change = ((n)=>{
     const image_li = document.querySelectorAll('.Carousel > li')
     image_li.forEach((li,i) =>{   
-        li.classList.add('space')
+        li.classList.add('unseen')
         li.style.transform = `translateX(${n*-100}%)`
         if( i == n) {
-            li.classList.remove('space')
+            li.classList.remove('unseen')
         }
     })
 })
+
+const move_image = (p) => {
+    const move_img = document.querySelectorAll('.Carousel > li ')
+    move_img.forEach( li=> {
+        li.style.transform = `translateX(${p}%)`
+    })
+}
