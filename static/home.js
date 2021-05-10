@@ -105,7 +105,7 @@ let page = null
 let search_api = null
 Search_Btn.addEventListener('click', () => {
   init_show = false
-  filter = true
+  filter_show = true
   page = 0
   search_api = `/api/attractions?page=${page}&keyword=${search.value}`  
   sightseeing_list.innerHTML = "" 
