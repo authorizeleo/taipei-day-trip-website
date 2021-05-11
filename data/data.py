@@ -74,7 +74,15 @@ TABLES['image'] = (
     "     REFERENCES `sightseeing` (`images`) ON DELETE CASCADE"
     ") ENGINE=InnoDB")
 
-
+TABLES['member'] = (
+    "CREATE TABLE `member` ("
+    " `id` int NOT NULL AUTO_INCREMENT,"
+    " `name` varchar(15) NOT NULL,"
+    " `email` varchar(100) NOT NULL UNIQUE,"
+    " `password` varchar(100) NOT NULL,"
+    " `time` datetime NOT NULL DEFAULT NOW(),"
+    "PRIMARY KEY (`id`)"
+    ") ENGINE=InnoDB")
 
     
 
@@ -99,6 +107,10 @@ add_data = ("INSERT IGNORE INTO sightseeing "
 add_image = ("INSERT IGNORE INTO image "
             "(image_no, src) "
             "VALUES (%s, %s)")
+
+add_member = ("INSERT INTO member "
+            "(name, email, password) "
+            "VALUES (%s, %s, %s)")
 
 with open(r"data/taipei-attractions.json", encoding="utf-8") as json_file:
     json_data = json.load(json_file)
@@ -215,6 +227,59 @@ def create_api_data(result):
                 ]
             }  
     return taipei_api_data
+
+successful = {
+        'ok':True
+	}
+
+def sign_Up(name, email, password):
+    email_error = {
+    'error':True,
+    'message':'此Email已註冊'
+    }
+    try:
+        member_data = (name, email, password)
+        cursor.execute(add_member, member_data)
+        cnx.commit()
+        return successful
+    except:
+        return email_error
+
+
+def sign_In(email, password):
+    member_error = {
+        'error':True,
+        'message':'本次登入失敗'
+    }
+    try:
+        cursor.execute("SELECT * FROM  member  WHERE  email = '{}' and password = '{}'".format(email, password))
+        member_data = cursor.fetchall()
+        if member_data:
+            return successful
+        else:
+            return member_error
+    except:
+        return member_error
+    
+def get_member(email):
+    
+    try :
+        cursor.execute("SELECT * FROM  member  WHERE  email = '{}'".format(email))
+        result = cursor.fetchone()
+        member = {
+            'data':{
+                'id':result[0],
+                'name':result[1],
+                'email':result[2],
+            }
+        }
+        return member
+    except:
+        member = {'data': None}
+        return member
+
+def sign_out():
+    return successful
 
 
 

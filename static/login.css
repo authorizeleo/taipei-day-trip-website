@@ -1,0 +1,121 @@
+
+.loginBox,.registeredBox{
+    width: 100%;
+    height: 100%;
+    left:0;
+    top:0;
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 10; 
+}
+
+.show,.register_show{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+}
+
+
+.LoginEd{
+    position: relative;
+    border-radius: 0 0 6px 6px;
+    width:340px;
+    display: flex;
+    flex-direction: column;
+    background-color: #FFFFFF;
+    color: #666666;
+    padding-bottom: 15px;
+    z-index: 998;
+}
+
+.active{
+    display: none;
+}
+
+
+
+.registered{
+    color: #666;
+    width: 340px;
+    background-color: #fff;
+    position: relative;
+    padding-bottom: 30px;
+    border-radius: 0 0 6px 6px;
+}
+
+.decorator{
+    width:340px;
+    border-radius: 6px 6px 0px 0px;
+    height: 10px;
+    z-index: 998;
+    background: linear-gradient(270deg, #337788 0%, #66AABB 100%);
+}
+
+.LoginEd > h3,.registered > h3{
+    padding-top: 15px;
+    text-align: center;
+    user-select: none;
+    position: relative;
+}
+.close{
+    position: absolute;
+    right:27px;
+    top:17px;
+    cursor: pointer;
+}
+#email,#password,#register_name,#register_email,#register_password{
+    width: 310px;
+    height: 47px;
+    padding: 15px;
+    box-sizing: border-box;
+    border: 1px solid #cccccc;
+    border-radius: 5px;
+    outline: none;
+    margin: 10px 15px
+}
+
+#password{
+    margin:0px 15px 10px 
+}
+
+#login,#registerBtn{
+    width: 310px;
+    height: 47px;
+    background-color: #448899;
+    border: none;
+    outline: none;
+    color:white;
+    font-size: 19px;
+    padding:10px 20px;
+    margin:10px 15px;
+    cursor: pointer;
+}
+
+.register{
+    cursor: pointer;
+}
+
+#login_tip,#register_tip{
+    display: flex;
+    align-self: center;
+    justify-content: center;
+    text-align: center;
+    color:red;
+    margin: 0;
+    padding: 0;
+}
+
+
+
+.check{
+    user-select: none;
+    text-align: center;
+    margin: 5px 15px 15px 15px;
+}
+
+

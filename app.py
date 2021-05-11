@@ -1,11 +1,11 @@
 from flask import *
-from data.data import search_page, keyword_search, search_attraction_Id
+from data.data import *
 
-app=Flask(
+app = Flask(
 	__name__,
 	static_folder='static',
 	static_url_path='/static')
-	
+app.secret_key = '123456applebanana'
 app.config["JSON_AS_ASCII"]=False
 app.config["TEMPLATES_AUTO_RELOAD"]=True
 
@@ -26,12 +26,14 @@ def booking():
 def thankyou():
 	return render_template("thankyou.html")
 
-@app.route('/api/attractions')
-def taipei_api():
-	sever_error = {
+
+sever_error = {
 		"error":True,
 		"message":"伺服器內部錯誤"
 	}
+
+@app.route('/api/attractions')
+def taipei_api():
 	page_id = int(request.args['page'])
 	if 'keyword' in request.args:
 		keyword = request.args['keyword']
@@ -54,7 +56,36 @@ def show_attraction(attractionId):
 	return jsonify(search_attraction_Id(attractionId))
 
 
-	
+@app.route('/api/user', methods=['GET','POST','PATCH','DELETE'])
+def sign_api_up():
+	if request.method == 'POST':
+		try:
+			data = request.get_json()
+			name = data['name']
+			email = data['email']
+			password = data['password']
+			return jsonify(sign_Up(name, email, password))
+		except:
+			return jsonify(sever_error)
+	if request.method == 'PATCH':
+		try:
+			data = request.get_json()
+			email = data['email']
+			password = data['password']
+			data_json = jsonify(sign_In(email, password)) 
+			session['email'] = email
+			return data_json
+		except:
+			return jsonify(sever_error)
+	if request.method == 'DELETE':
+		session.pop('email', None)
+		return jsonify(sign_out())
+	if request.method == 'GET':
+		email = session.get('email')
+		if email:
+			return jsonify(get_member(email))
+		else :
+			return jsonify(sever_error)
 
 
 if __name__ == '__main__':
