@@ -103,12 +103,17 @@ const input_image = ((imgs) => {
     imgs.forEach((img, i ) => {
         const image = document.createElement('img')
         image.src = img
+        image.className = 'image-loading'
         const image_li = document.createElement('li')
+        image_li.appendChild(image)
+        sights_img.appendChild(image_li)
         if( i != 0){
             image_li.classList.add('unseen')
         }
-        image_li.appendChild(image)
-        sights_img.appendChild(image_li)
+        image.addEventListener('load', () => {
+            image.classList.remove('image-loading')
+            image.classList.add('sights_img')
+        })
     })
 })
 

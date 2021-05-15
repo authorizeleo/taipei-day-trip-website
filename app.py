@@ -1,13 +1,11 @@
 from flask import *
-from data.data import *
+from model import app
+from model.attraction import *
+from model.login import *
 
-app = Flask(
-	__name__,
-	static_folder='static',
-	static_url_path='/static')
-app.secret_key = '123456applebanana'
-app.config["JSON_AS_ASCII"]=False
-app.config["TEMPLATES_AUTO_RELOAD"]=True
+
+app.config.from_object('config')
+init_table() 
 
 # Pages
 @app.route("/")
@@ -76,6 +74,7 @@ def sign_api_up():
 			session['email'] = email
 			return data_json
 		except:
+			session.pop('email', None)
 			return jsonify(sever_error)
 	if request.method == 'DELETE':
 		session.pop('email', None)
@@ -89,5 +88,5 @@ def sign_api_up():
 
 
 if __name__ == '__main__':
-	# app.run(port=3001,debug=True)
-	app.run(host="0.0.0.0",port=3000)
+	app.run(port=3001,debug=True)
+	# app.run(host="0.0.0.0",port=3000)

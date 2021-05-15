@@ -112,11 +112,14 @@ login.addEventListener('click', (e) => {
 const registerBtn = document.getElementById('registerBtn')
 const register_tip = document.getElementById('register_tip')
 registerBtn.addEventListener('click', (e) => {
+    const RS_name = document.getElementById('register_name')
+    const RS_email = document.getElementById('register_email')
+    const RS_password = document.getElementById('register_password')
     e.preventDefault()
     let data = {
-        name: document.getElementById('register_name').value,
-        email:document.getElementById('register_email').value,
-        password:document.getElementById('register_password').value
+        name: RS_name.value,
+        email:RS_email.value,
+        password:RS_password.value
     }
     fetch('/api/user', {
         method:'POST',
@@ -127,6 +130,9 @@ registerBtn.addEventListener('click', (e) => {
     .then(res => {
         if(res.ok){
             register_tip.textContent = '註冊成功'
+            RS_name.value= ''
+            RS_email.value= ''
+            RS_password.value = ''
         }else{
             register_tip.textContent = res.message
         }
