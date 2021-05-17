@@ -2,6 +2,7 @@ from flask import *
 from model import app
 from model.attraction import *
 from model.login import *
+from model.booking import *
 
 
 app.config.from_object('config')
@@ -85,6 +86,41 @@ def sign_api_up():
 			return jsonify(get_member(email))
 		else :
 			return jsonify(sever_error)
+
+@app.route('/api/booking', methods=['GET','POST','DELETE'])
+def bookings():
+	email = session.get('email')
+	if email:
+		if request.method == 'POST':	
+			data = request.get_json()
+			B_id =data['attractionId']
+			B_date = data['date']
+			B_time = data['time']
+			B_price = data['price']
+			session['date'] = B_date
+			session['time'] = B_time
+			session['id'] = B_id
+			return jsonify(new_travel(B_id, B_date, B_time, B_price))
+		if request.method == 'DELETE':
+			session.pop('id', None)
+			session.pop('date', None)
+			session.pop('time', None)
+			return jsonify(cancel_travel())
+		if request.method == 'GET' :
+			B_id = session.get('id')
+			B_date = session.get('date')
+			B_time = session.get('time')
+			if B_id:
+				return jsonify(get_travel(B_id, B_date, B_time))
+			else:
+				return jsonify(sever_error)
+	else:
+		return jsonify(sever_error)
+	
+	# if request.method == 'GET':
+	# 	return jsonify(get_booking())
+	
+
 
 
 if __name__ == '__main__':

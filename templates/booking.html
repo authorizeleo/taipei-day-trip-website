@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>台北一日遊</title>
+    <link rel="stylesheet" href="static/booking/booking.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="static/login/login.css">
+</head>
+<body>
+    <div class='loginBox active'>
+        <span class='show'></span>
+        <div class='decorator'></div>
+        <div class='LoginEd'>
+            <h3>登入會員帳號<p class='close' >X</p></h3>
+            <form >
+                <input type="email" name="email" id="email" placeholder="輸入電子信箱">
+                <input type='password' name='password' id='password' placeholder="輸入密碼">
+                <input type="submit" id='login' value='登入帳戶'>
+                <tip id='login_tip'></tip>
+                <p class='check'>還沒有帳戶?<span class='register' id='click_register'>點此註冊</span></p>
+            </form>
+        </div>
+    </div>
+
+    <div class='registeredBox active'>
+        <span class='register_show'></span>
+        <div class='decorator'></div>
+        <div class='registered'>
+            <h3>註冊會員帳號<span class='close' id='register_close'>X</span></h3>
+            <form >
+                <input type="text" name="register_name" id="register_name" placeholder="輸入姓名">
+                <input type="email" name="register_email" id="register_email" placeholder="輸入電子郵件">
+                <input type="password" name='register_password' id='register_password' placeholder="輸入密碼">
+                <input type="submit" value="註冊新帳戶" id='registerBtn'>
+                <tip id='register_tip'></tip>
+                <p class='check'>已經有帳戶了?<span class='register' id='login_click'>點此登入</span></p>
+            </form> 
+        </div>
+    </div>
+    <div class='NavBarBox' >
+        <div class="NavBar">
+            <a href='/'><h1 class='title'>台北一日遊</h1></a>
+            <ul>
+                <li id='schedule'>預定行程</li>
+                <li class='select' id='select'>登入/註冊</li>
+            </ul>
+        </div>
+    </div>
+    <div class='part'></div>
+    <div class='helloBox'>
+        <div class='hello'>
+            <h2 class='hello-title'>您好，<span id='who'></span>，待預訂的行程如下：</h2>
+        </div>
+    </div>
+    <div class='booking-box'>
+        <div class='booking'>
+            <div class='booking-main'>
+                <div class='booking-img'></div>
+                <div class='booking-text'>
+                    <h3 >台北一日遊：<span class='booking-title'></span></h3>
+                    <h4>日期：<span class='booking-date'></span></h4>
+                    <h4>時間：<span class='booking-time'></span></h4>
+                    <h4>費用：<span class='booking-price'></span></h4>
+                    <h4>地點：<span class='booking-address'></span></h4>
+                </div>
+                <img id='trashBox' src="/static/booking/icon_delete.svg" alt="" class='trash'>
+                
+            </div>
+            
+            <div class='part2'></div>
+            <div class='booking-info'>
+                <h2 class='travel-title'>您的聯絡資訊</h2>
+                <div class='booking-info-text'>
+                    <span>聯絡姓名：<input type="text" name="booking_name" id="booking_name"></span>
+                    <span>聯絡信箱：<input type="email" name="booking_name" id="booking_email"></span>
+                    <span>手機號碼：<input type="tel" name="booking_name" id="booking_tel"></span>
+                    <h5>請保持手機暢通，準時到達，導覽人員將用手機與您聯繫，務必留下正確的聯絡方式。</h5>
+                </div>
+            </div>
+            <div class='part2'></div>
+            <div class='booking-visa'>
+                <h2 class='travel-title'>信用卡付款資訊</h2>
+                <div class='booking-visa-text'>
+                    <span>卡片號碼：<input type="text" name="booking_name" id="booking_card" placeholder="**** **** **** ****"></span>
+                    <span>過期時間：<input type="email" name="booking_name" id="booking_time" placeholder='MM / YY'></span>
+                    <span>驗證密碼：<input type="tel" name="booking_name" id="booking_vaild" placeholder='CVV'></span>
+                </div>
+            </div>
+            <div class='part2'></div>
+            <div class='booking-total'>
+                <div class='booking-order-box'>
+                    <h3>總價:<span id='order-price'></span></h3>
+                    <div class='order-Btn'>確認訂購並付款</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class='footer' >
+        <p>COPYRIGHT © 2021 台北一日遊</p>
+    </div>
+    
+    <script src="static/login/login.js"></script>
+    <script src="static/booking/booking.js"></script>
+    
+</body>
+</html>

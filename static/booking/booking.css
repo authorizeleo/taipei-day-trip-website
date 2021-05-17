@@ -1,0 +1,273 @@
+*{
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    text-decoration: none;
+    font-family: 'Noto Sans TC', sans-serif;
+}
+
+
+
+/* navBar */
+.NavBarBox{
+    display: flex;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+}
+
+.NavBar{
+    background-color: #fff;
+    display: flex;
+    width: 1200px;
+    height: 54px;
+    justify-content: space-between;
+}
+
+.title {      
+    font-size: 30px;
+    margin:9px ;
+    line-height: 34px;
+    color:#448899;  
+    font-weight: 700;
+}
+
+.NavBar > ul{
+    display: flex;
+    line-height: 13.3px;
+}
+
+.NavBar > ul > li{
+    margin: 20px 10px;
+    color:#666666;
+    font-weight: 400;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.part{
+    width: 100vw;
+    height:0px;
+    border-top: 1px solid #e8e8e8;
+}
+
+/* footer */
+.footer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 104px;
+    background: #757575;
+    user-select: none;
+}
+
+/* booking */
+
+.booking-box{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 72px;
+    font-size: 16px;
+    color: #666;
+    
+}
+
+.booking{
+    /* border: 1px solid; */
+    width: 1200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding-left:100px
+}
+
+.travel-title,
+.helloBox{
+    color: #666;
+    font-size: 19px;
+    margin-top: 46px;
+    margin-bottom: 35px;
+}
+
+.helloBox{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.hello{
+    width: 1200px;
+    justify-content: flex-start;
+    padding-left:100px
+}
+
+
+.hello-title{
+    font-size: 19px;
+}
+
+
+
+.booking-img{
+    background-size: cover;
+    width: 266px;
+    height: 200px;
+}
+
+
+
+.booking-main{
+    display: flex;
+    position: relative;
+}
+
+.booking-text{
+    margin-left:22px;
+    line-height: 13.3px;
+}
+
+.booking-text > h4 > span{
+    font-weight: normal;
+}
+
+#trashBox{
+    position: absolute;
+    right:-105%;
+    cursor: pointer;
+}
+
+
+.booking-text > h3{
+    font-size: 16px;
+    color: #448899;
+    margin-bottom: 30px;
+    margin-top: 5px;
+}
+
+.booking-text > h4{
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+.booking-visa,
+.booking-info{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.booking-info-text,
+.booking-visa-text{
+    display: flex;
+    flex-direction: column;
+}
+
+.booking-info-text > span,
+.booking-visa-text > span{
+    margin-bottom: 29px;
+}
+
+.booking-info-text > h5{
+    margin-top: -2px;
+    line-height: 23px;
+}
+
+.part2{
+    width: 100%;
+    height: 1px;
+    background-color: #E8E8E8;
+    margin-top: 40px;
+}
+
+.booking-total{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.booking-order-box {
+    align-self: flex-end;
+    margin-right: 50px;
+}
+
+.booking-order-box > h3{
+    margin-top: 43px;
+}
+
+.order-Btn{
+    width: 133px;
+    height: 16px;
+    font-size: 19px;
+    line-height: 16px;
+    color: white;
+    padding: 10px 20px;
+    background-color:#448899;
+    border-radius: 5px;
+    margin-top: 25px;
+    cursor: pointer;
+}
+
+#booking_name,
+#booking_email,
+#booking_tel,
+#booking_card,
+#booking_time,
+#booking_vaild{
+    width: 200px;
+    height: 38px;
+    padding: 10px;
+    border: 1px solid #E8E8E8;
+    border-radius: 5px;
+    outline: none;
+    box-sizing: border-box;
+}
+
+@media (max-width: 1200px){
+    .hello{
+        justify-content: center;
+    }
+
+    .booking{
+        align-items: center;
+    }
+    .booking-visa,
+    .booking-info{
+        align-content: center;
+    }
+    .travel-title{
+        display: flex;
+        align-self: center;
+    }
+    .booking-main{
+        flex-direction: column;
+    }
+    .booking-img{
+        width: 340px;
+        height: 256px;
+    }
+
+    .part2{
+        width: 340px;
+    }
+    .booking-order-box{
+        align-self: center;
+    }
+
+    .booking-info-text,
+    .booking-visa-text{
+        align-items: center;
+    }
+    #trashBox{
+        bottom:-5%;
+        right:0%
+    }
+    .hello{
+        justify-content: center;
+    }
+}
+
+

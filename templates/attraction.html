@@ -45,7 +45,7 @@
         <div class="NavBar">
             <a href='/'><h1 class='title'>台北一日遊</h1></a>
             <ul>
-                <li>預定行程</li>
+                <li id='schedule'>預定行程</li>
                 <li class='select'>登入/註冊</li>
             </ul>
         </div>
@@ -72,12 +72,12 @@
                     <h4>訂購導覽行程</h4>
                     <p>以此景點為中心一日行程，帶你探索城市角落故事</p>
                     <h4 class='date'>選擇日期：</h4>
-                    <input type="date" class='input_date'>
+                    <input type="date" class='input_date' id='date_input'>
                     <br>
                     <h4 class='time'>選擇時間：</h4>
-                    <input type="radio" name='day' value='am' id='time_am'  class='day' checked>
+                    <input type="radio" name='day' value='morning' id='time_am'  class='day' checked>
                     <label for="time_am">上半天</label>
-                    <input type="radio" name="day" value="pm" id='time_pm' class='day'>
+                    <input type="radio" name="day" value="afternoon" id='time_pm' class='day'>
                     <label for="time_pm">下半天</label>
                     <br>
                     <h4>導覽費用：</h4><span class='travel_price' id='price'>新台幣：2000元</span>

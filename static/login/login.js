@@ -7,7 +7,10 @@ const registeredBox = document.querySelector('.registeredBox')
 const register_close = document.querySelector('#register_close')
 const click_register = document.querySelector('#click_register')
 const login_click = document.querySelector('#login_click')
-
+const schedule = document.querySelector('#schedule')
+const who = document.querySelector('#who')
+let login_status = false
+let booking_status = false
 select.addEventListener('click', () => {
     if(select.textContent == '登出'){
         fetch('/api/user', {
@@ -20,6 +23,7 @@ select.addEventListener('click', () => {
             if(res.ok){
                 select.textContent = '登入/註冊'
                 window.location.reload()
+                login_status = false
             }
         })
     }else{
@@ -55,9 +59,8 @@ login_click.addEventListener('click', () => {
     loginBox.classList.remove('active')
 })
 
-async function init_status(){
-    window.onload = () =>{
-         fetch('/api/user',{method:"GET"})
+function init_status(){
+    fetch('/api/user',{method:"GET"})
         .then(res => res.json())
         .then(res => {
         if(res.data == null ) return
@@ -66,16 +69,20 @@ async function init_status(){
         }
         else if(res.data){
             select.textContent='登出'
-            console.log(res)
+            login_status = true
+            if (booking_status){
+                who.textContent = res.data.name
+            }
         }else{
             console.log(res)
         }
     })
-    }
+    
 } 
 
 
 init_status()
+
 
     
 
@@ -101,6 +108,7 @@ login.addEventListener('click', (e) => {
         if(data.ok){
             select.textContent = '登出'
             login_tip.textContent =  '成功登入'
+            login_status = true
             setTimeout(() =>{
                 window.location.reload()
             },2000) 
@@ -139,5 +147,12 @@ registerBtn.addEventListener('click', (e) => {
     })
 })
 
-
+schedule.addEventListener('click', ()=>{
+    if(login_status){
+        window.location.href = '/booking'
+    }
+    else{
+        loginBox.classList.remove('active')
+    }
+})
 
