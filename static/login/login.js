@@ -10,6 +10,7 @@ const login_click = document.querySelector('#login_click')
 const schedule = document.querySelector('#schedule')
 const who = document.querySelector('#who')
 let booking_status = false
+let login_status = false
 select.addEventListener('click', () => {
     if(select.textContent == '登出'){
         fetch('/api/user', {
@@ -21,6 +22,7 @@ select.addEventListener('click', () => {
         .then(res => {
             if(res.ok){
                 select.textContent = '登入/註冊'
+                login_status = false
                 window.location.reload()
             }
         })
@@ -67,7 +69,7 @@ async function init_status(){
 
     if(user_json.data) {
         select.textContent='登出'
-        
+        login_status = true
         if (booking_status){
             who.textContent = user_json.data.name
         }
@@ -106,6 +108,7 @@ login.addEventListener('click', (e) => {
         if(data.ok){
             select.textContent = '登出'
             login_tip.textContent =  '成功登入'
+            login_status = true
             setTimeout(() =>{
                 window.location.reload()
             },2000) 
