@@ -65,25 +65,20 @@
 /* booking */
 
 .booking-box{
-    width: 100%;
     display: flex;
     justify-content: center;
-    align-items: center;
     margin-bottom: 72px;
     font-size: 16px;
     color: #666;
-    
 }
 
 .booking{
-    /* border: 1px solid; */
     width: 1200px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-    padding-left:100px
 }
+
+
 
 .travel-title,
 .helloBox{
@@ -136,7 +131,7 @@
 
 #trashBox{
     position: absolute;
-    right:-105%;
+    right:10%;
     cursor: pointer;
 }
 
@@ -157,6 +152,7 @@
 .booking-info{
     display: flex;
     flex-direction: column;
+    justify-content: flex-start;
     align-items: flex-start;
 }
 
@@ -177,7 +173,9 @@
 }
 
 .part2{
-    width: 100%;
+   display: flex;
+   align-items: center;
+    width: 1200px;
     height: 1px;
     background-color: #E8E8E8;
     margin-top: 40px;
@@ -229,6 +227,7 @@
 @media (max-width: 1200px){
     .hello{
         justify-content: center;
+        padding-left:0px
     }
 
     .booking{

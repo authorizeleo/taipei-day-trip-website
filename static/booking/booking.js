@@ -7,11 +7,12 @@ const booking_price = document.querySelector('.booking-price')
 const booking_address = document.querySelector('.booking-address')
 const booking_img = document.querySelector('.booking-img')
 const order_price = document.querySelector('#order-price')
-booking_status = true
 
-window.onload =  () => {
-    if(!login_status){
-        window.location.href = '/'
+
+booking_status = true
+init_status().then(()=> {
+    if(login_status === false){
+        // window.location.href = '/'
     }else{
         fetch('/api/booking')
         .then((res)=> res.json())
@@ -30,7 +31,8 @@ window.onload =  () => {
             booking_img.style.backgroundImage = `url(${res.attraction.image})`
         })
     }
-}
+})
+
 
 
 del_travel.addEventListener('click', () => {

@@ -59,24 +59,24 @@ login_click.addEventListener('click', () => {
     loginBox.classList.remove('active')
 })
 
-function init_status(){
-    fetch('/api/user',{method:"GET"})
-        .then(res => res.json())
-        .then(res => {
-        if(res.data == null ) return
-        if (res.error){
-            console.log(res)
+async function init_status(){
+    const fetch_user = await fetch('/api/user')
+    const user_json = await fetch_user.json()
+    if(user_json.data == null) return 
+    if (user_json.error) {
+        console.log(res.error)
+    }
+
+    if(user_json.data) {
+        select.textContent='登出'
+        login_status = true
+        if (booking_status){
+            who.textContent = user_json.data.name
         }
-        else if(res.data){
-            select.textContent='登出'
-            login_status = true
-            if (booking_status){
-                who.textContent = res.data.name
-            }
-        }else{
-            console.log(res)
-        }
-    })
+    }else{
+        console.log(user_json)
+    }
+    
     
 } 
 
