@@ -13,21 +13,23 @@ booking_status = true
 fetch('/api/booking')
     .then((res)=> res.json())
     .then((res) => {
-        if(res.login_error) {
-            window.location.href = '/'
-        }
+        
         if(res.error) {
             booking_box.innerHTML ='目前沒有任何待預訂的行程'
             return
         }
-        booking_title.textContent = res.attraction.name
-        booking_date.textContent = res.date
-        res.time = res.time == 'morning' ? '早上 9 點到下午 4 點': '下午 4 點到晚上 11 點'
-        booking_time.textContent = res.time
-        booking_price.textContent = `新台幣${res.price}元`
-        order_price.textContent = `新台幣${res.price}元`
-        booking_address.textContent = res.attraction.address
-        booking_img.style.backgroundImage = `url(${res.attraction.image})`
+        if(res.login_error) {
+            window.location.href = '/'
+        }else{
+            booking_title.textContent = res.attraction.name
+            booking_date.textContent = res.date
+            res.time = res.time == 'morning' ? '早上 9 點到下午 4 點': '下午 4 點到晚上 11 點'
+            booking_time.textContent = res.time
+            booking_price.textContent = `新台幣${res.price}元`
+            order_price.textContent = `新台幣${res.price}元`
+            booking_address.textContent = res.attraction.address
+            booking_img.style.backgroundImage = `url(${res.attraction.image})`
+        }
     })
 
 
