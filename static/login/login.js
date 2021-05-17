@@ -9,7 +9,6 @@ const click_register = document.querySelector('#click_register')
 const login_click = document.querySelector('#login_click')
 const schedule = document.querySelector('#schedule')
 const who = document.querySelector('#who')
-let login_status = false
 let booking_status = false
 select.addEventListener('click', () => {
     if(select.textContent == '登出'){
@@ -23,7 +22,6 @@ select.addEventListener('click', () => {
             if(res.ok){
                 select.textContent = '登入/註冊'
                 window.location.reload()
-                login_status = false
             }
         })
     }else{
@@ -69,7 +67,7 @@ async function init_status(){
 
     if(user_json.data) {
         select.textContent='登出'
-        login_status = true
+        
         if (booking_status){
             who.textContent = user_json.data.name
         }
@@ -108,7 +106,6 @@ login.addEventListener('click', (e) => {
         if(data.ok){
             select.textContent = '登出'
             login_tip.textContent =  '成功登入'
-            login_status = true
             setTimeout(() =>{
                 window.location.reload()
             },2000) 

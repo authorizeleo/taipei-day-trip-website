@@ -115,10 +115,12 @@ def bookings():
 			else:
 				return jsonify(sever_error)
 	else:
-		return jsonify(sever_error)
+		login_error ={
+			"login_error": True,
+		}
+		return jsonify(login_error)
 	
-	# if request.method == 'GET':
-	# 	return jsonify(get_booking())
+
 	
 
 
