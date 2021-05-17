@@ -12,7 +12,7 @@ const order_price = document.querySelector('#order-price')
 booking_status = true
 init_status().then(()=> {
     if(login_status === false){
-        // window.location.href = '/'
+        window.location.href = '/'
     }else{
         fetch('/api/booking')
         .then((res)=> res.json())
