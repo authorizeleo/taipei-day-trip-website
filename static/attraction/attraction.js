@@ -13,12 +13,15 @@ const time_pm = document.getElementById('time_pm')
 const travel_price = document.getElementById('price')
 const ul = document.getElementById('CarouselCircle')
 let imgsBox ;
+let att_id = null
 
 fetch(api_sights)
 .then(res => res.json())
 .then((myJson) => {
+     
     const json = myJson['data'][0]
     const name = json['name']
+    att_id = json['id']
     const address = json['address']
     const des = json['description']
     imgsBox = json['images']
@@ -103,12 +106,17 @@ const input_image = ((imgs) => {
     imgs.forEach((img, i ) => {
         const image = document.createElement('img')
         image.src = img
+        image.className = 'image-loading'
         const image_li = document.createElement('li')
+        image_li.appendChild(image)
+        sights_img.appendChild(image_li)
         if( i != 0){
             image_li.classList.add('unseen')
         }
-        image_li.appendChild(image)
-        sights_img.appendChild(image_li)
+        image.addEventListener('load', () => {
+            image.classList.remove('image-loading')
+            image.classList.add('sights_img')
+        })
     })
 })
 
@@ -129,3 +137,36 @@ const move_image = (p) => {
         li.style.transform = `translateX(${p}%)`
     })
 }
+
+const start_travel = document.querySelector('.start-travel')
+const travel_date = document.getElementById('date_input')
+start_travel.addEventListener('click', () => {
+    if(!travel_date.value) return
+    console.log(att_id)
+    let time_travel = time_am.checked ? time_am.value : time_pm.value
+    let price_travel = time_travel == 'morning'  ? 2000: 2500
+    let travel_data = {
+        'attractionId':att_id,
+        'date':travel_date.value,
+        'time':time_travel,
+        'price':price_travel
+    }
+    if(login_status){
+        fetch('/api/booking',
+        {
+        method: 'POST',
+        headers: {
+            "content-type": "application/json",
+        },
+        body:JSON.stringify(travel_data)
+        })
+        .then(res => res.json())
+        .then(res => {
+            console.log(res)
+            window.location.href = '/booking'
+        })
+    }else{
+        loginBox.classList.remove('active')
+    }
+    
+})

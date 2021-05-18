@@ -7,7 +7,10 @@ const registeredBox = document.querySelector('.registeredBox')
 const register_close = document.querySelector('#register_close')
 const click_register = document.querySelector('#click_register')
 const login_click = document.querySelector('#login_click')
-
+const schedule = document.querySelector('#schedule')
+const who = document.querySelector('#who')
+let booking_status = false
+let login_status = false
 select.addEventListener('click', () => {
     if(select.textContent == '登出'){
         fetch('/api/user', {
@@ -19,6 +22,7 @@ select.addEventListener('click', () => {
         .then(res => {
             if(res.ok){
                 select.textContent = '登入/註冊'
+                login_status = false
                 window.location.reload()
             }
         })
@@ -56,26 +60,29 @@ login_click.addEventListener('click', () => {
 })
 
 async function init_status(){
-    window.onload = () =>{
-         fetch('/api/user',{method:"GET"})
-        .then(res => res.json())
-        .then(res => {
-        if(res.data == null ) return
-        if (res.error){
-            console.log(res)
-        }
-        else if(res.data){
-            select.textContent='登出'
-            console.log(res)
-        }else{
-            console.log(res)
-        }
-    })
+    const fetch_user = await fetch('/api/user')
+    const user_json = await fetch_user.json()
+    if(user_json.data == null) return 
+    if (user_json.error) {
+        console.log(res.error)
     }
+
+    if(user_json.data) {
+        select.textContent='登出'
+        login_status = true
+        if (booking_status){
+            who.textContent = user_json.data.name
+        }
+    }else{
+        console.log(user_json)
+    }
+    
+    
 } 
 
 
 init_status()
+
 
     
 
@@ -101,6 +108,7 @@ login.addEventListener('click', (e) => {
         if(data.ok){
             select.textContent = '登出'
             login_tip.textContent =  '成功登入'
+            login_status = true
             setTimeout(() =>{
                 window.location.reload()
             },2000) 
@@ -112,11 +120,14 @@ login.addEventListener('click', (e) => {
 const registerBtn = document.getElementById('registerBtn')
 const register_tip = document.getElementById('register_tip')
 registerBtn.addEventListener('click', (e) => {
+    const RS_name = document.getElementById('register_name')
+    const RS_email = document.getElementById('register_email')
+    const RS_password = document.getElementById('register_password')
     e.preventDefault()
     let data = {
-        name: document.getElementById('register_name').value,
-        email:document.getElementById('register_email').value,
-        password:document.getElementById('register_password').value
+        name: RS_name.value,
+        email:RS_email.value,
+        password:RS_password.value
     }
     fetch('/api/user', {
         method:'POST',
@@ -127,11 +138,21 @@ registerBtn.addEventListener('click', (e) => {
     .then(res => {
         if(res.ok){
             register_tip.textContent = '註冊成功'
+            RS_name.value= ''
+            RS_email.value= ''
+            RS_password.value = ''
         }else{
             register_tip.textContent = res.message
         }
     })
 })
 
-
+schedule.addEventListener('click', ()=>{
+    if(login_status){
+        window.location.href = '/booking'
+    }
+    else{
+        loginBox.classList.remove('active')
+    }
+})
 

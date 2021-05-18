@@ -5,10 +5,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>台北一日遊</title>
-    <link rel="stylesheet" href="static/home.css">
+    <link rel="stylesheet" href="static/home/home.css">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="static/login.css">
+    <link rel="stylesheet" href="static/login/login.css">
 </head>
 <body>
     <div class='loginBox active'>
@@ -41,41 +41,42 @@
             </form> 
         </div>
     </div>
-    <div class='NavBar-box' >
+    <div class='NavBarBox' >
         <div class="NavBar">
             <a href='/'><h1 class='title'>台北一日遊</h1></a>
             <ul>
-                <li>預定行程</li>
+                <li id='schedule'>預定行程</li>
                 <li class='select' id='select'>登入/註冊</li>
             </ul>
         </div>
     </div>
-    <hr>
+    <div class='part'></div>
     <div class='header-box' >
         <div class='header'>
             <div class='header-introduce'>
                 <h1 class='header-title'>輕鬆享受台北一日悠閒</h1>
                 <p class='header-main'>探索每個角落，體驗城市的深度旅遊行程</p>
-                <div class='searchBox'>
+                <form class='searchBox'>
                     <input type='text' placeholder="輸入景點名稱查詢" class='input-search' id="search">
                     <div class='searchBtnBox'>
                         <div  class='searchBtn'></div>
                     </div>
-                </div>     
+                </form>     
             </div>
             <div class=header-img></div>
         </div>
     </div>
     <div class='sightseeing-outbox' >
         <div class='sightseeingBox' id='sightseeingBox'>
+            <!-- <span class='circle-loading'></span> -->
         </div>
     </div>
     <div class='footer' >
         <p>COPYRIGHT © 2021 台北一日遊</p>
     </div>
     
-    <script src="static/login.js"></script>
-    <script src="static/home.js"></script>
+    <script src="static/login/login.js"></script>
+    <script src="static/home/home.js"></script>
     
 </body>
 </html>
