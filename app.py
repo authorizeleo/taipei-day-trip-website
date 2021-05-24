@@ -1,8 +1,11 @@
 from flask import *
+import requests
 from model import app
 from model.attraction import *
 from model.login import *
 from model.booking import *
+from model.orders import *
+import json
 
 
 app.config.from_object('config')
@@ -121,7 +124,80 @@ def bookings():
 		return jsonify(login_error)
 	
 
-	
+
+@app.route('/api/orders', methods=['POST'])
+def orders():
+	email = session.get('email')
+	if email:
+		data = request.get_json()
+		prime = data['card']
+		name = data['name']
+		email = data['email']
+		phone = data['phone']
+		if len(name) and len(email) and len(phone) != 0:
+			B_id = session.get('id')
+			B_date = session.get('date')
+			B_time = session.get('time')
+			trip = get_travel(B_id, B_date, B_time)
+			order_info = get_order_info(prime, name, email, phone, trip)
+			url = 'https://sandbox.tappaysdk.com/tpc/payment/pay-by-prime'
+			payload = {
+				"partner_key":'partner_aZcyTJgv4q9y0g1ebtdzPmTUQk4vZYgml4SlbD1TDfPO1r94qkVKOiDQ',
+				"prime": prime,
+				"merchant_id": "skyto122010_CTBC",
+				"amount": order_info['order']['price'],
+				"currency": "TWD",
+				"details": order_info['order']['trip']['attraction']['name'],
+				"cardholder": {
+					"phone_number": order_info['contact']['phone'],
+					"name": order_info['contact']['name'],
+					"email": order_info['contact']['email']
+				},
+			}
+
+			headers = {
+				'content-type': 'application/json',
+				'x-api-key': 'partner_aZcyTJgv4q9y0g1ebtdzPmTUQk4vZYgml4SlbD1TDfPO1r94qkVKOiDQ'
+			}
+			input_order_info = requests.post(url, data=json.dumps(payload), headers=headers)
+			get_order_data = json.loads(input_order_info.text)
+			status = get_order_data['status']
+			session['data'] = order_info
+			session['number'] = successful_order(status)['data']['number']
+			return jsonify(successful_order(status))
+		else:
+			input_error ={
+				'error':True,
+				'message':'資料不得為空'
+			}
+			return input_error
+	else:
+		login_error ={
+			"login_error": True,
+		}
+		return jsonify(login_error)
+
+
+@app.route('/api/order/<int:orderNumber>')
+def order_get_self_data(orderNumber):
+	email = session.get('email')
+	number = session.get('number')
+	data  = session.get('data')
+	rotate_orderNumber = str(orderNumber)
+	if email:
+		if rotate_orderNumber == number:
+			session.pop('id', None)
+			session.pop('date', None)
+			session.pop('time', None)
+			return jsonify(last_thank_you(number, data))
+		else:
+			return jsonify(sever_error)
+	else:
+		login_error ={
+			"login_error": True,
+		}
+		return jsonify(login_error)
+
 
 
 

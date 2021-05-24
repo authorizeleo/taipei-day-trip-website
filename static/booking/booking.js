@@ -23,7 +23,7 @@ fetch('/api/booking')
         }else{
             booking_title.textContent = res.attraction.name
             booking_date.textContent = res.date
-            res.time = res.time == 'morning' ? '早上 9 點到下午 4 點': '下午 4 點到晚上 11 點'
+            res.time = res.time == 'morning' ? '早上 9 點到下午 4 點': '下午 2 點到晚上 9 點'
             booking_time.textContent = res.time
             booking_price.textContent = `新台幣${res.price}元`
             order_price.textContent = `新台幣${res.price}元`
@@ -44,7 +44,6 @@ del_travel.addEventListener('click', () => {
         })
         .then((res) => res.json())
         .then((res) => {
-            console.log(res)
             if(res.ok){
                 booking_box.innerHTML ='目前沒有任何待預訂的行程'
             }

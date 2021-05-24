@@ -8,6 +8,8 @@ class Member(db.Model):
     email = db.Column(db.String(50), nullable=False, unique=True)
     password = db.Column(db.String(50), nullable=False)
     time = db.Column(db.DateTime, default=datetime.datetime.now, nullable=False)
+    # order_id = db.Column(db.Integer, autoincrement=True)
+    # db_Member = db.relationship("Order", backref="Member")
 
 db.create_all()
 

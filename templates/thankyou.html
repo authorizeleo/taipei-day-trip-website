@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>台北一日遊</title>
+    <link rel="stylesheet" href="/static/thankyou/thankyou.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/login/login.css">
+</head>
+<body>
+    <div class='loginBox active'>
+        <span class='show'></span>
+        <div class='decorator'></div>
+        <div class='LoginEd'>
+            <h3>登入會員帳號<p class='close' >X</p></h3>
+            <form >
+                <input type="email" name="email" id="email" placeholder="輸入電子信箱">
+                <input type='password' name='password' id='password' placeholder="輸入密碼">
+                <input type="submit" id='login' value='登入帳戶'>
+                <span id='login_tip'></span>
+                <p class='check'>還沒有帳戶?<span class='register' id='click_register'>點此註冊</span></p>
+            </form>
+        </div>
+    </div>
+
+    <div class='registeredBox active'>
+        <span class='register_show'></span>
+        <div class='decorator'></div>
+        <div class='registered'>
+            <h3>註冊會員帳號<span class='close' id='register_close'>X</span></h3>
+            <form >
+                <input type="text" name="register_name" id="register_name" placeholder="輸入姓名">
+                <input type="email" name="register_email" id="register_email" placeholder="輸入電子郵件">
+                <input type="password" name='register_password' id='register_password' placeholder="輸入密碼">
+                <input type="submit" value="註冊新帳戶" id='registerBtn'>
+                <span id='register_tip'></span>
+                <p class='check'>已經有帳戶了?<span class='register' id='login_click'>點此登入</span></p>
+            </form> 
+        </div>
+    </div>
+    <div class='NavBarBox' >
+        <div class="NavBar">
+            <a href='/'><h1 class='title'>台北一日遊</h1></a>
+            <ul>
+                <li id='schedule'>預定行程</li>
+                <li class='select'>登入/註冊</li>
+            </ul>
+        </div>
+    </div>
+    <div class='thankyou'>
+        <h3 ><span id=thankyou_name></span>,<span id='thankyou_number'></span>訂購完成,祝你旅途愉快</h3>
+    </div>
+    <div class='footer' >
+        <p>COPYRIGHT © 2021 台北一日遊</p>
+    </div>
+    
+    <script src='/static/login/login.js'></script>
+    <script src='/static/thankyou/thankyou.js'></script>
+</body>
+</html>
