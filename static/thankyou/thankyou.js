@@ -12,8 +12,9 @@ fetch(`/api/order/${order_number}`)
     }
     
     if(res.error){
-        thankyou.innerHTML =''
-        window.location.href ='/'
+        thankyou.innerHTML ='錯誤訂購號碼'
+        setTimeout(() => window.location.href ='/', 1800)
+        
     }
 
     if(res.data){
