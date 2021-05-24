@@ -188,22 +188,25 @@ def order_get_self_data(orderNumber):
 	number = session.get('number')
 	data  = session.get('data')
 	if email:
-		url = "https://sandbox.tappaysdk.com/tpc/transaction/query"
-		payload = {
-			"partner_key": "partner_aZcyTJgv4q9y0g1ebtdzPmTUQk4vZYgml4SlbD1TDfPO1r94qkVKOiDQ",
-			"filters":{
-				"bank_transaction_id":orderNumber
+		if number == orderNumber:
+			url = "https://sandbox.tappaysdk.com/tpc/transaction/query"
+			payload = {
+				"partner_key": "partner_aZcyTJgv4q9y0g1ebtdzPmTUQk4vZYgml4SlbD1TDfPO1r94qkVKOiDQ",
+				"filters":{
+					"bank_transaction_id":orderNumber
+				}
 			}
-		}
-		headers = {
-			'content-type': 'application/json',
-			'x-api-key': 'partner_aZcyTJgv4q9y0g1ebtdzPmTUQk4vZYgml4SlbD1TDfPO1r94qkVKOiDQ'
-		}
+			headers = {
+				'content-type': 'application/json',
+				'x-api-key': 'partner_aZcyTJgv4q9y0g1ebtdzPmTUQk4vZYgml4SlbD1TDfPO1r94qkVKOiDQ'
+			}
 
-		find_order = requests.post(url, data=json.dumps(payload),headers=headers)
-		find_data = json.loads(find_order.text)
-		find_result = find_data['trade_records'][0]['record_status']
-		return jsonify(last_thank_you(number, data, find_result))
+			find_order = requests.post(url, data=json.dumps(payload),headers=headers)
+			find_data = json.loads(find_order.text)
+			find_result = find_data['trade_records'][0]['record_status']
+			return jsonify(last_thank_you(number, data, find_result))
+		else:
+			return jsonify(sever_error)
 	else:
 		login_error ={
 			"login_error": True,
