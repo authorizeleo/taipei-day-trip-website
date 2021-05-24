@@ -185,11 +185,7 @@ def order_get_self_data(orderNumber):
 	data  = session.get('data')
 	rotate_orderNumber = str(orderNumber)
 	if email:
-		if rotate_orderNumber == number:
-			# print(rotate_orderNumber == number)
-			session.pop('id', None)
-			session.pop('date', None)
-			session.pop('time', None)
+		if number == rotate_orderNumber:
 			return jsonify(last_thank_you(number, data))
 		else:
 			return jsonify(sever_error)
@@ -203,5 +199,5 @@ def order_get_self_data(orderNumber):
 
 
 if __name__ == '__main__':
-	# app.run(port=3001,debug=True)
-	app.run(host="0.0.0.0",port=3000)
+	app.run(port=3001,debug=True)
+	# app.run(host="0.0.0.0",port=3000)

@@ -10,6 +10,11 @@ fetch(`/api/order/${order_number}`)
     if(res.login_error) {
         window.location.href = '/'
     }
+
+    if(res.data){
+        thankyou_name.textContent = res.data.contact.name
+        thankyou_number.textContent = res.data.number
+    }
     
     if(res.error){
         thankyou.innerHTML ='錯誤訂購號碼'
@@ -17,8 +22,5 @@ fetch(`/api/order/${order_number}`)
         
     }
 
-    if(res.data){
-        thankyou_name.textContent = res.data.contact.name
-        thankyou_number.textContent = res.data.number
-    }
+    
 })
