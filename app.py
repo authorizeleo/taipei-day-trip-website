@@ -186,6 +186,7 @@ def order_get_self_data(orderNumber):
 	rotate_orderNumber = str(orderNumber)
 	if email:
 		if rotate_orderNumber == number:
+			# print(rotate_orderNumber == number)
 			session.pop('id', None)
 			session.pop('date', None)
 			session.pop('time', None)
