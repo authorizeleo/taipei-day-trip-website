@@ -6,7 +6,7 @@ const thankyou = document.querySelector('.thankyou')
 fetch(`/api/order/${order_number}`)
 .then((res) => res.json())
 .then((res) => {
-    console.log(res)
+    // console.log(res)
     if(res.login_error) {
         window.location.href = '/'
     }
