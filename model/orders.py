@@ -36,7 +36,7 @@ def get_order_info(prime, name, email, phone, new_trip):
 
     return orders_info   
     
-def successful_order(status):
+def successful_order(number):
     time = datetime.now()
     # Order_data = Order(name=name,email = email,password= password)
     # db.session.add(Order_data)
@@ -44,22 +44,35 @@ def successful_order(status):
     # db.session.close()
     successful= {
         'data':{
-            'number': time.strftime('%Y'"%m"'%d''%f'),
+            'number': number,
             'payment':{
-                'status':status,
+                'status':'已付款',
                 'message':'付款成功'
             }
         }
     }
     return successful
 
-def last_thank_you(number, check_data):
+def lose_result(number):
+    lose= {
+        'data':{
+            'number': number,
+            'payment':{
+                'status':'未付款',
+                'message':'付款失敗'
+            }
+        }
+    }
+    return lose
+
+def last_thank_you(number, check_data, status):
     copy_data = check_data.copy()
     thank_you = {
             "price": copy_data['order']['price'],
             "number": number,
-            "status": 1
+            "status": status
     }
+    # print(thank_you)
     del copy_data['order']['price']
     copy_data.update(thank_you)
     last_data = {

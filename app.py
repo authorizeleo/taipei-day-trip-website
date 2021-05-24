@@ -162,9 +162,13 @@ def orders():
 			input_order_info = requests.post(url, data=json.dumps(payload), headers=headers)
 			get_order_data = json.loads(input_order_info.text)
 			status = get_order_data['status']
-			session['data'] = order_info
-			session['number'] = successful_order(status)['data']['number']
-			return jsonify(successful_order(status))
+			number = get_order_data['bank_transaction_id']
+			if status == 0:
+				session['data'] = order_info
+				session['number'] = number
+				return jsonify(successful_order(number))
+			else :
+				return jsonify(lose_result(number))
 		else:
 			input_error ={
 				'error':True,
@@ -178,17 +182,28 @@ def orders():
 		return jsonify(login_error)
 
 
-@app.route('/api/order/<int:orderNumber>')
+@app.route('/api/order/<orderNumber>')
 def order_get_self_data(orderNumber):
 	email = session.get('email')
 	number = session.get('number')
 	data  = session.get('data')
-	rotate_orderNumber = str(orderNumber)
 	if email:
-		if number == rotate_orderNumber:
-			return jsonify(last_thank_you(number, data))
-		else:
-			return jsonify(sever_error)
+		url = "https://sandbox.tappaysdk.com/tpc/transaction/query"
+		payload = {
+			"partner_key": "partner_aZcyTJgv4q9y0g1ebtdzPmTUQk4vZYgml4SlbD1TDfPO1r94qkVKOiDQ",
+			"filters":{
+				"bank_transaction_id":orderNumber
+			}
+		}
+		headers = {
+			'content-type': 'application/json',
+			'x-api-key': 'partner_aZcyTJgv4q9y0g1ebtdzPmTUQk4vZYgml4SlbD1TDfPO1r94qkVKOiDQ'
+		}
+
+		find_order = requests.post(url, data=json.dumps(payload),headers=headers)
+		find_data = json.loads(find_order.text)
+		find_result = find_data['trade_records'][0]['record_status']
+		return jsonify(last_thank_you(number, data, find_result))
 	else:
 		login_error ={
 			"login_error": True,
