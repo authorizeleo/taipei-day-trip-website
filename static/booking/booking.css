@@ -222,6 +222,11 @@
     border-radius: 5px;
     outline: none;
     box-sizing: border-box;
+    vertical-align: middle;
+}
+
+.notbr{
+    display: inline-block;
 }
 
 @media (max-width: 1200px){

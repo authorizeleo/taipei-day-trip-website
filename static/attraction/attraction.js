@@ -142,7 +142,6 @@ const start_travel = document.querySelector('.start-travel')
 const travel_date = document.getElementById('date_input')
 start_travel.addEventListener('click', () => {
     if(!travel_date.value) return
-    console.log(att_id)
     let time_travel = time_am.checked ? time_am.value : time_pm.value
     let price_travel = time_travel == 'morning'  ? 2000: 2500
     let travel_data = {

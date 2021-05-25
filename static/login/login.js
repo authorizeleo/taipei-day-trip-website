@@ -9,6 +9,8 @@ const click_register = document.querySelector('#click_register')
 const login_click = document.querySelector('#login_click')
 const schedule = document.querySelector('#schedule')
 const who = document.querySelector('#who')
+const who_name = document.querySelector('#booking_name')
+const who_email = document.querySelector('#booking_email')
 let booking_status = false
 let login_status = false
 select.addEventListener('click', () => {
@@ -72,6 +74,8 @@ async function init_status(){
         login_status = true
         if (booking_status){
             who.textContent = user_json.data.name
+            who_name.value = user_json.data.name
+            who_email.value = user_json.data.email
         }
     }else{
         console.log(user_json)

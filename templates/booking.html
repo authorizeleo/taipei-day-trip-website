@@ -9,6 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="static/login/login.css">
+    <script src="https://js.tappaysdk.com/tpdirect/v5.7.0"></script>
 </head>
 <body>
     <div class='loginBox active'>
@@ -85,9 +86,10 @@
             <div class='booking-visa'>
                 <h2 class='travel-title'>信用卡付款資訊</h2>
                 <div class='booking-visa-text'>
-                    <span>卡片號碼：<input type="text" name="booking_name" id="booking_card" placeholder="**** **** **** ****"></span>
-                    <span>過期時間：<input type="email" name="booking_name" id="booking_time" placeholder='MM / YY'></span>
-                    <span>驗證密碼：<input type="tel" name="booking_name" id="booking_vaild" placeholder='CVV'></span>
+                    <span>卡片號碼：<span id="booking_card"  class='notbr'></span></span>
+                    <span>過期時間：<span  id="booking_time" class='notbr'></span></span>
+                    <span>驗證密碼：<span  id="booking_vaild" class='notbr'></span></span>
+                    <span id='error_tip' style='color:red'></span>
                 </div>
             </div>
             <div class='part2'></div>
@@ -106,6 +108,6 @@
     
     <script src="static/login/login.js"></script>
     <script src="static/booking/booking.js"></script>
-    
+    <script src='static/booking/visa.js'></script>
 </body>
 </html>
